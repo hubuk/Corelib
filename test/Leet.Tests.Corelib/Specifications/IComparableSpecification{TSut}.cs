@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IComparableSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,6 +9,7 @@
 namespace Leet.Specifications
 {
     using System;
+    using Leet.Testing;
     using Xunit;
 
     /// <summary>
@@ -17,7 +18,7 @@ namespace Leet.Specifications
     /// <typeparam name="TSut">
     ///     Type which shall be tested for conformance with behavior defined for <see cref="IComparable"/> class.
     /// </typeparam>
-    public abstract class IComparableSpecification<TSut>
+    public abstract class IComparableSpecification<TSut> : InstanceSpecification<TSut>
         where TSut : IComparable
     {
         /// <summary>
@@ -27,7 +28,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CompareTo_TSut_CalledWithSameInstance_ReturnsZero(TSut sut)
         {
@@ -47,7 +48,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CompareTo_TSut_CalledWithNull_ReturnsOne(TSut sut)
         {
@@ -69,7 +70,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CompareTo_TSut_CalledWithObjectOfDifferentType_ThrowsArgumentException(TSut sut)
         {

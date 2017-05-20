@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net46</TargetFrameworks>
+    <RootNamespace>Leet.Testing</RootNamespace>
+    <Description>A library packages with basic reusable functionality for testing .Net types.</Description>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), appveyor.yml))\build\Common.props" />
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.AutoNSubstitute" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.Idioms" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
+    <PackageReference Include="NSubstitute" Version="$(NSubstituteVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Leet.Corelib\Leet.Corelib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

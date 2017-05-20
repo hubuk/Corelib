@@ -8,6 +8,7 @@
 
 namespace Leet
 {
+    using Leet.Testing;
     using Ploeh.AutoFixture;
     using Ploeh.AutoFixture.AutoNSubstitute;
 

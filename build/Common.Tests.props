@@ -6,4 +6,16 @@
     <PackageTags>tests;$(PackageTags)</PackageTags>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.AutoNSubstitute" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.Idioms" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="$(AutoFixtureVersion)" />
+    <PackageReference Include="Castle.Core" Version="$(CastleVersion)" />
+    <PackageReference Include="NSubstitute" Version="$(NSubstituteVersion)" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftNetTestSdkVersion)" />
+    <PackageReference Include="xunit" Version="$(XunitVersion)" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="$(XunitVersion)" />
+  </ItemGroup>
+  
 </Project>

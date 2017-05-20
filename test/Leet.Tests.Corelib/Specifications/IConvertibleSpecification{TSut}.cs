@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IConvertibleSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -10,6 +10,7 @@ namespace Leet.Specifications
 {
     using System;
     using System.Globalization;
+    using Leet.Testing;
     using Xunit;
 
     /// <summary>
@@ -18,7 +19,7 @@ namespace Leet.Specifications
     /// <typeparam name="TSut">
     ///     Type which shall be tested for conformance with behavior defined for <see cref="IConvertible"/> class.
     /// </typeparam>
-    public abstract class IConvertibleSpecification<TSut>
+    public abstract class IConvertibleSpecification<TSut> : InstanceSpecification<TSut>
         where TSut : IConvertible
     {
         /// <summary>
@@ -28,7 +29,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToBoolean_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -54,7 +55,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToByte_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -80,7 +81,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToChar_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -106,7 +107,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToDateTime_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -132,7 +133,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToDecimal_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -158,7 +159,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToDouble_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -184,7 +185,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToInt16_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -210,7 +211,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToInt32_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -236,7 +237,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToInt64_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -262,7 +263,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToSByte_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -288,7 +289,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToSingle_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -314,7 +315,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToString_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -340,7 +341,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToUInt16_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -366,7 +367,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToUInt32_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -392,7 +393,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToUInt64_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {
@@ -418,7 +419,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToType_Type_IFormatProvider_CalledWithNullType_ThrowsArgumentNullException(TSut sut)
         {
@@ -441,7 +442,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToType_IFormatProvider_CalledWithNullFormatProvider_DoesNotThrowArgumentNullException(TSut sut)
         {

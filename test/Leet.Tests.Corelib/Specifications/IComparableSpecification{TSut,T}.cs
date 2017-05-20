@@ -9,7 +9,9 @@
 namespace Leet.Specifications
 {
     using System;
-    using System.Reflection;
+    using Leet.Testing;
+    using Leet.Testing.Assertions;
+    using Leet.Testing.Reflection;
     using Xunit;
 
     /// <summary>
@@ -21,9 +23,14 @@ namespace Leet.Specifications
     /// <typeparam name="T">
     ///     The type of objects to compare.
     /// </typeparam>
-    public abstract class IComparableSpecification<TSut, T>
+    public abstract class IComparableSpecification<TSut, T> : InstanceSpecification<TSut>
         where TSut : IComparable<T>, T
     {
+        /// <summary>
+        ///     The constant name of the <c>Compare</c> member.
+        /// </summary>
+        protected const string MemberName_Compare = "Compare";
+
         /// <summary>
         ///     Checks whether <see cref="IComparable{T}.CompareTo(T)"/> method called with same instance
         ///     returns 0.
@@ -31,7 +38,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CompareTo_TSut_CalledWithSameInstance_ReturnsZero(TSut sut)
         {
@@ -51,12 +58,12 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CompareTo_TSut_CalledWithNull_ReturnsOne(TSut sut)
         {
             // Fixture setup
-            TSut other = default(TSut);
+            var other = default(TSut);
 
             // Exercise system
             // Verify outcome
@@ -68,14 +75,16 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> type implements also <see cref="IEquatable{T}"/> interface.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_IEquatable_T()
         {
             // Fixture setup
+            Type sutType = typeof(TSut);
+            Type iEquatableOfTType = typeof(IEquatable<T>);
 
             // Exercise system
             // Verify outcome
-            Assert.True(typeof(IEquatable<T>).IsAssignableFrom(typeof(TSut)));
+            AssertType.HierarchyDeclaresInterface(sutType, iEquatableOfTType);
 
             // Teardown
         }
@@ -83,22 +92,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> type implements op_GreaterThan operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_GreaterThanOperator()
         {
             // Fixture setup
-            string methodName = "op_GreaterThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
-            Type[] paraeterTypes = new Type[]
+            string methodName = OperatorNames.op_GreaterThan;
+            Type[] parameterTypes = new Type[]
             {
                 typeof(T), typeof(T),
             };
 
             // Exercise system
-            MethodInfo operatorMethod = typeof(TSut).GetMethod(methodName, flags, Type.DefaultBinder, paraeterTypes, null);
-
             // Verify outcome
-            Assert.Equal(typeof(bool), operatorMethod.ReturnType);
+            AssertType.HasMethod(typeof(TSut), MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -106,22 +112,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> type implements op_GreaterThanOrEqual operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_GreaterThanOrEqualOperator()
         {
             // Fixture setup
-            string methodName = "op_GreaterThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
-            Type[] paraeterTypes = new Type[]
+            string methodName = OperatorNames.op_GreaterThanOrEqual;
+            Type[] parameterTypes = new Type[]
             {
                 typeof(T), typeof(T),
             };
 
             // Exercise system
-            MethodInfo operatorMethod = typeof(TSut).GetMethod(methodName, flags, Type.DefaultBinder, paraeterTypes, null);
-
             // Verify outcome
-            Assert.Equal(typeof(bool), operatorMethod.ReturnType);
+            AssertType.HasMethod(typeof(TSut), MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -129,22 +132,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> type implements op_LessThan operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_LessThanOperator()
         {
             // Fixture setup
-            string methodName = "op_LessThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
-            Type[] paraeterTypes = new Type[]
+            string methodName = OperatorNames.op_LessThan;
+            Type[] parameterTypes = new Type[]
             {
                 typeof(T), typeof(T),
             };
 
             // Exercise system
-            MethodInfo operatorMethod = typeof(TSut).GetMethod(methodName, flags, Type.DefaultBinder, paraeterTypes, null);
-
             // Verify outcome
-            Assert.Equal(typeof(bool), operatorMethod.ReturnType);
+            AssertType.HasMethod(typeof(TSut), MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -152,22 +152,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> type implements op_LessThanOrEqual operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_LessThanOrEqualOperator()
         {
             // Fixture setup
-            string methodName = "op_LessThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
-            Type[] paraeterTypes = new Type[]
+            string methodName = OperatorNames.op_LessThanOrEqual;
+            Type[] parameterTypes = new Type[]
             {
                 typeof(T), typeof(T),
             };
 
             // Exercise system
-            MethodInfo operatorMethod = typeof(TSut).GetMethod(methodName, flags, Type.DefaultBinder, paraeterTypes, null);
-
             // Verify outcome
-            Assert.Equal(typeof(bool), operatorMethod.ReturnType);
+            AssertType.HasMethod(typeof(TSut), MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -176,22 +173,19 @@ namespace Leet.Specifications
         ///     Checks whether <typeparamref name="TSut"/> type implements static <c>Compare</c> method for
         ///     comparison of two instances of <typeparamref name="T"/> type.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Implements_StaticMethod_Compare_T_T()
         {
             // Fixture setup
-            string methodName = "Compare";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public;
-            Type[] paraeterTypes = new Type[]
+            string methodName = MemberName_Compare;
+            Type[] parameterTypes = new Type[]
             {
                 typeof(T), typeof(T),
             };
 
             // Exercise system
-            MethodInfo operatorMethod = typeof(TSut).GetMethod(methodName, flags, Type.DefaultBinder, paraeterTypes, null);
-
             // Verify outcome
-            Assert.Equal(typeof(int), operatorMethod.ReturnType);
+            AssertType.HasMethod(typeof(TSut), MemberDefinitionDetails.Static, methodName, typeof(int), parameterTypes);
 
             // Teardown
         }
@@ -203,25 +197,19 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GreaterThanOperator_CalledWithSameInstance_ReturnsFalse(TSut sut)
         {
             // Fixture setup
-            string methodName = "op_GreaterThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_GreaterThan;
+            object[] arguments = new object[]
             {
                 sut, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.False(result);
@@ -236,25 +224,19 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GreaterThanOrEqualOperator_CalledWithSameInstance_ReturnsTrue(TSut sut)
         {
             // Fixture setup
-            string methodName = "op_GreaterThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_GreaterThanOrEqual;
+            object[] arguments = new object[]
             {
                 sut, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.True(result);
@@ -269,25 +251,19 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void LessThanOperator_CalledWithSameInstance_ReturnsFalse(TSut sut)
         {
             // Fixture setup
-            string methodName = "op_LessThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_LessThan;
+            object[] arguments = new object[]
             {
                 sut, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.False(result);
@@ -302,25 +278,19 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        public void LessThanOrEqualoperator_CalledWithSameInstance_ReturnsTrue(TSut sut)
+        public void LessThanOrEqualOperator_CalledWithSameInstance_ReturnsTrue(TSut sut)
         {
             // Fixture setup
-            string methodName = "op_LessThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_LessThanOrEqual;
+            object[] arguments = new object[]
             {
                 sut, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.True(result);
@@ -329,137 +299,217 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether the GreaterThan operator when called with <see langword="null"/>
+        ///     Checks whether the GreaterThan operator when called with <see langword="null"/> as a first parameter
         ///     reference returns <see langword="true"/>.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        public void GreaterThanOperator_CalledWithNull_ReturnsTrue(TSut sut)
+        public void GreaterThanOperator_CalledWithNullAsFirstParameter_ReturnsTrue(TSut sut)
         {
             // Fixture setup
-            TSut other = default(TSut);
-            string methodName = "op_GreaterThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_GreaterThan;
+            object[] arguments = new object[]
             {
-                sut, sut,
+                null, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(other, null) || result);
+            Assert.True(result);
 
             // Teardown
         }
 
         /// <summary>
-        ///     Checks whether the GreaterThanOrEqual operator when called with <see langword="null"/>
+        ///     Checks whether the GreaterThanOrEqual operator when called with <see langword="null"/> as a first parameter
         ///     reference returns <see langword="true"/>.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        public void GreaterThanOrEqualOperator_CalledWithNull_ReturnsTrue(TSut sut)
+        public void GreaterThanOrEqualOperator_CalledWithNullAsFirstParameter_ReturnsTrue(TSut sut)
         {
             // Fixture setup
-            TSut other = default(TSut);
-            string methodName = "op_GreaterThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_GreaterThanOrEqual;
+            object[] arguments = new object[]
             {
-                sut, sut,
+                null, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(other, null) || result);
+            Assert.True(result);
 
             // Teardown
         }
 
         /// <summary>
-        ///     Checks whether the LessThan operator when called with <see langword="null"/>
+        ///     Checks whether the LessThan operator when called with <see langword="null"/> as a first parameter
         ///     reference returns <see langword="false"/>.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        public void LessThanOperator_CalledWithNull_ReturnsFalse(TSut sut)
+        public void LessThanOperator_CalledWithNullAsFirstParameter_ReturnsFalse(TSut sut)
         {
             // Fixture setup
-            TSut other = default(TSut);
-            string methodName = "op_LessThan";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_LessThan;
+            object[] arguments = new object[]
             {
-                sut, sut,
+                null, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(other, null) || !result);
+            Assert.False(result);
 
             // Teardown
         }
 
         /// <summary>
-        ///     Checks whether the LessThanOrEqual operator when called with <see langword="null"/>
+        ///     Checks whether the LessThanOrEqual operator when called with <see langword="null"/> as a first parameter
         ///     reference returns <see langword="false"/>.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        public void LessThanOrEqualOperator_CalledWithNull_ReturnsFalse(TSut sut)
+        public void LessThanOrEqualOperator_CalledWithNullAsFirstParameter_ReturnsFalse(TSut sut)
         {
             // Fixture setup
-            TSut other = default(TSut);
-            string methodName = "op_LessThanOrEqual";
-            BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.InvokeMethod;
-            object[] args = new object[]
+            string methodName = OperatorNames.op_LessThanOrEqual;
+            object[] arguments = new object[]
             {
-                sut, sut,
+                null, sut,
             };
 
             // Exercise system
-            bool result = (bool)typeof(TSut).InvokeMember(
-                methodName,
-                flags,
-                Type.DefaultBinder,
-                null,
-                args);
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(other, null) || !result);
+            Assert.False(result);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the GreaterThan operator when called with <see langword="null"/> as a second parameter
+        ///     reference returns <see langword="false"/>.
+        /// </summary>
+        /// <param name="sut">
+        ///     Object under test.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void GreaterThanOperator_CalledWithNullAsSecondParameter_ReturnsFalse(TSut sut)
+        {
+            // Fixture setup
+            string methodName = OperatorNames.op_GreaterThan;
+            object[] arguments = new object[]
+            {
+                sut, null,
+            };
+
+            // Exercise system
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
+
+            // Verify outcome
+            Assert.False(result);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the GreaterThanOrEqual operator when called with <see langword="null"/> as a second parameter
+        ///     reference returns <see langword="false"/>.
+        /// </summary>
+        /// <param name="sut">
+        ///     Object under test.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void GreaterThanOrEqualOperator_CalledWithNullAsSecondParameter_ReturnsFalse(TSut sut)
+        {
+            // Fixture setup
+            string methodName = OperatorNames.op_GreaterThanOrEqual;
+            object[] arguments = new object[]
+            {
+                sut, null,
+            };
+
+            // Exercise system
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
+
+            // Verify outcome
+            Assert.False(result);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the LessThan operator when called with <see langword="null"/> as a second parameter
+        ///     reference returns <see langword="true"/>.
+        /// </summary>
+        /// <param name="sut">
+        ///     Object under test.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void LessThanOperator_CalledWithNullAsSecondParameter_ReturnsTrue(TSut sut)
+        {
+            // Fixture setup
+            string methodName = OperatorNames.op_LessThan;
+            object[] arguments = new object[]
+            {
+                sut, null,
+            };
+
+            // Exercise system
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
+
+            // Verify outcome
+            Assert.True(result);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the LessThanOrEqual operator when called with <see langword="null"/> as a second parameter
+        ///     reference returns <see langword="true"/>.
+        /// </summary>
+        /// <param name="sut">
+        ///     Object under test.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void LessThanOrEqualOperator_CalledWithNullAsSecondParameter_ReturnsTrue(TSut sut)
+        {
+            // Fixture setup
+            string methodName = OperatorNames.op_LessThanOrEqual;
+            object[] arguments = new object[]
+            {
+                sut, null,
+            };
+
+            // Exercise system
+            bool result = (bool)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
+
+            // Verify outcome
+            Assert.True(result);
 
             // Teardown
         }
@@ -470,14 +520,19 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticCompare_T_T_CalledWithSameInstance_ReturnsZero(TSut sut)
         {
             // Fixture setup
+            string methodName = MemberName_Compare;
+            object[] arguments = new object[]
+            {
+                sut, sut,
+            };
 
             // Exercise system
-            int result = (int)typeof(TSut).InvokePublicMethod("Compare", sut, sut);
+            int result = (int)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.Equal(0, result);
@@ -492,15 +547,20 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticCompare_T_T_CalledWithNullAsFirstParameter_ReturnsOne(TSut sut)
         {
             // Fixture setup
             TSut other = default(TSut);
+            string methodName = MemberName_Compare;
+            object[] arguments = new object[]
+            {
+                other, sut,
+            };
 
             // Exercise system
-            int result = (int)typeof(TSut).InvokePublicMethod("Compare", other, sut);
+            int result = (int)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.True(!object.ReferenceEquals(other, null) || result == 1);
@@ -515,15 +575,20 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticCompare_T_T_CalledWithNullAsSecondParameter_ReturnsOne(TSut sut)
         {
             // Fixture setup
             TSut other = default(TSut);
+            string methodName = MemberName_Compare;
+            object[] arguments = new object[]
+            {
+                sut, other,
+            };
 
             // Exercise system
-            int result = (int)typeof(TSut).InvokePublicMethod("Compare", sut, other);
+            int result = (int)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
             Assert.True(!object.ReferenceEquals(other, null) || result == 1);
@@ -535,21 +600,22 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="IComparable{T}.CompareTo(T)"/> method when called with both <see langword="null"/>
         ///     reference parameters returns 0.
         /// </summary>
-        /// <param name="sut">
-        ///     Object under test.
-        /// </param>
-        [Theory]
-        [AutoDomainData]
-        public void StaticCompare_T_T_CalledWithBothNullParameters_ReturnsZero(TSut sut)
+        [Paradigm]
+        public void StaticCompare_T_T_CalledWithBothNullParameters_ReturnsZero()
         {
             // Fixture setup
             TSut other = default(TSut);
+            string methodName = MemberName_Compare;
+            object[] arguments = new object[]
+            {
+                other, other,
+            };
 
             // Exercise system
-            int result = (int)typeof(TSut).InvokePublicMethod("Compare", other, other);
+            int result = (int)typeof(TSut).InvokeMethod(MemberVisibilityFlags.Public, methodName, arguments);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(other, null) || result == 0);
+            Assert.Equal(1, result);
 
             // Teardown
         }

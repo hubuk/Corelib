@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="SequenceEqualityComparerTestsForInt32.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -6,13 +6,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-using Leet;
-using Leet.Specifications;
-
-/// <summary>
-///     A class that tests <see cref="SequenceEqualityComparer{T}"/> class for <see cref="int"/>
-///     generic type argument.
-/// </summary>
-public sealed class SequenceEqualityComparerTestsForInt32 : SequenceEqualityComparerSpecification<SequenceEqualityComparer<int>, int>
+namespace Leet.Tests
 {
+    /// <summary>
+    ///     A class that tests <see cref="SequenceEqualityComparer{T}"/> class for <see cref="int"/>
+    ///     generic type argument.
+    /// </summary>
+    public sealed class SequenceEqualityComparerTestsForInt32 : SequenceEqualityComparerTests<int>
+    {
+    }
 }

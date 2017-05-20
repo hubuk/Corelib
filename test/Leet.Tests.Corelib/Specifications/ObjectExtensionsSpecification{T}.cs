@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="ObjectExtensionsSpecification{T}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,21 +9,22 @@
 namespace Leet.Specifications
 {
     using System;
-    using Leet;
+    using Leet.Testing;
     using Xunit;
 
     /// <summary>
-    ///     A class that specifies behavior for <see cref="ObjectExtensions"/> class.
+    ///     A class that specifies behavior for <see cref="Leet.ObjectExtensions"/> class.
     /// </summary>
     /// <typeparam name="T">
     ///     Type of the object to test.
     /// </typeparam>
-    public abstract class ObjectExtensionsSpecification<T>
+    [StaticSpecificationType(typeof(ObjectExtensions))]
+    public abstract class ObjectExtensionsSpecification<T> : StaticSpecification
     {
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.GetHashCodeAllowNull(object)"/> method returns zero for default instance.
+        ///     Checks whether <see cref="Leet.ObjectExtensions.GetHashCodeAllowNull(object)"/> method returns zero for default instance.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void GetHashCodeAllowNull_Object_ForDefaultInstance_ReturnsZero()
         {
             // Fixture setup
@@ -39,13 +40,13 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.GetHashCodeAllowNull(object)"/> method returns same result as
+        ///     Checks whether <see cref="Leet.ObjectExtensions.GetHashCodeAllowNull(object)"/> method returns same result as
         ///     <see cref="object.GetHashCode"/> method for non-<see langword="null"/> reference.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GetHashCodeAllowNull_Object_ForNonNullReference_ReturnsSameResultAsGetHashCode(T sut)
         {
@@ -62,13 +63,13 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.ToStringAllowNull(object, string)"/> method returns <paramref name="nullRepresentation"/>
+        ///     Checks whether <see cref="Leet.ObjectExtensions.ToStringAllowNull(object, string)"/> method returns <paramref name="nullRepresentation"/>
         ///     for default instance of the reference type and result same as <see cref="object.ToString"/> for structures.
         /// </summary>
         /// <param name="nullRepresentation">
         ///     A value that shall be returned if the specified object is a <see langword="null"/> reference.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToStringAllowNull_Object_String_ForDefaultInstance_ReturnsNullRepresentationForReferenceTypeAndResultOfToStringForStructure(string nullRepresentation)
         {
@@ -87,7 +88,7 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.ToStringAllowNull(object, string)"/> method returns same result
+        ///     Checks whether <see cref="Leet.ObjectExtensions.ToStringAllowNull(object, string)"/> method returns same result
         ///     as <see cref="object.ToString"/> for non-<see langword="null"/> references.
         /// </summary>
         /// <param name="sut">
@@ -96,7 +97,7 @@ namespace Leet.Specifications
         /// <param name="nullRepresentation">
         ///     A value that shall be returned if the specified object is a <see langword="null"/> reference.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToStringAllowNull_Object_String_ForNonNullReference_ReturnsSameResultAsToString(T sut, string nullRepresentation)
         {
@@ -114,10 +115,10 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.ToStringAllowNull(object, string)"/> method returns <see langword="null"/>
+        ///     Checks whether <see cref="Leet.ObjectExtensions.ToStringAllowNull(object, string)"/> method returns <see langword="null"/>
         ///     for <see langword="null"/> reference and <see langword="null"/> representation.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void ToStringAllowNull_Object_String_ForNullReferenceAndNullRepresentation_ReturnsNull()
         {
             // Fixture setup
@@ -134,13 +135,13 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.ToStringAllowNull(object, string)"/> method returns result same as
+        ///     Checks whether <see cref="Leet.ObjectExtensions.ToStringAllowNull(object, string)"/> method returns result same as
         ///     <see cref="object.ToString"/> for non-<see langword="null"/> reference and <see langword="null"/> representation.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToStringAllowNull_Object_String_ForNonNullReferenceAndNullRepresentation_ReturnsResultSameAsToString(T sut)
         {
@@ -158,10 +159,10 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.GetTypeAllowNull(object)"/> method returns <see langword="null"/>
+        ///     Checks whether <see cref="Leet.ObjectExtensions.GetTypeAllowNull(object)"/> method returns <see langword="null"/>
         ///     for <see langword="null"/> reference.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void GetTypeAllowNull_Object_ForNullReference_ReturnsNull()
         {
             // Fixture setup
@@ -178,13 +179,13 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="ObjectExtensions.GetTypeAllowNull(object)"/> method returns result same as
+        ///     Checks whether <see cref="Leet.ObjectExtensions.GetTypeAllowNull(object)"/> method returns result same as
         ///     <see cref="object.GetType"/> for non-<see langword="null"/> reference.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GetTypeAllowNull_Object_ForNonNullReference_ReturnsSameResultAsGetType(T sut)
         {

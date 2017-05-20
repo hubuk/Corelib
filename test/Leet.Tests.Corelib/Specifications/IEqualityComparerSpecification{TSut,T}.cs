@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IEqualityComparerSpecification{TSut,T}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -10,6 +10,7 @@ namespace Leet.Specifications
 {
     using System;
     using System.Collections.Generic;
+    using Leet.Testing;
     using Xunit;
 
     /// <summary>
@@ -21,7 +22,7 @@ namespace Leet.Specifications
     /// <typeparam name="T">
     ///     The type of objects to compare.
     /// </typeparam>
-    public abstract class IEqualityComparerSpecification<TSut, T>
+    public abstract class IEqualityComparerSpecification<TSut, T> : InstanceSpecification<TSut>
         where TSut : IEqualityComparer<T>
     {
         /// <summary>
@@ -31,7 +32,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_T_T_ForBothDefaultInstanceParameters_ReturnsTrue(TSut sut)
         {
@@ -56,7 +57,7 @@ namespace Leet.Specifications
         /// <param name="second">
         ///     Second parameter instance.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_T_T_ForFirstDefaultInstanceParametersAndSecondNonDefault_ReturnsFalse(TSut sut, T second)
         {
@@ -82,7 +83,7 @@ namespace Leet.Specifications
         /// <param name="first">
         ///     First parameter instance.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_T_T_ForSecondDefaultInstanceParametersAndSecondNonDefault_ReturnsFalse(TSut sut, T first)
         {
@@ -108,7 +109,7 @@ namespace Leet.Specifications
         /// <param name="instance">
         ///     A parameter instance to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_T_T_ForBothSameInstances_ReturnsTrue(TSut sut, T instance)
         {
@@ -132,7 +133,7 @@ namespace Leet.Specifications
         /// <param name="instance">
         ///     Instance of the object which has code shall be obtained.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GetHashCode_T_Always_ReturnsSameValue(TSut sut, T instance)
         {

@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="EnumerableExtensionsSpecification{T}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -11,25 +11,25 @@ namespace Leet.Specifications
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Leet;
+    using Leet.Testing;
     using NSubstitute;
     using Ploeh.AutoFixture;
-    using Properties;
     using Xunit;
 
     /// <summary>
     ///     A class that specifies behavior for <see cref="EnumerableExtensions"/> class.
     /// </summary>
     /// <typeparam name="T">
-    ///     Type of the object to test.
+    ///     Type of the enumerable collection items.
     /// </typeparam>
-    public abstract class EnumerableExtensionsSpecification<T>
+    [StaticSpecificationType(typeof(EnumerableExtensions))]
+    public abstract class EnumerableExtensionsSpecification<T> : StaticSpecification
     {
         /// <summary>
         ///     Checks whether <see cref="EnumerableExtensions.Iterate{T}(IEnumerable{T})"/> method throws an <see cref="ArgumentNullException"/>
         ///     when called on <see langword="null"/> reference.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Iterate_IEnumerableOfT_ForNullCollection_Throws()
         {
             // Fixture setup
@@ -49,7 +49,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.Iterate{T}(IEnumerable{T})"/> method is using
         ///     <see cref="IEnumerable{T}.GetEnumerator"/> method.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Iterate_IEnumerableOfT_Always_GetsEnumerator()
         {
             // Fixture setup
@@ -70,7 +70,7 @@ namespace Leet.Specifications
         /// <param name="collectionSize">
         ///     Size of the collection under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
@@ -81,7 +81,6 @@ namespace Leet.Specifications
             IFixture fixture = DomainFixture.CreateFor(this);
             IEnumerable<T> source = fixture.CreateMany<T>(collectionSize);
             IEnumerator<T> sourceEnumerator = source.GetEnumerator();
-
             IEnumerator<T> enumeratorMock = Substitute.For<IEnumerator<T>>();
             enumeratorMock.MoveNext().Returns(x => sourceEnumerator.MoveNext());
             IEnumerable<T> enumerable = Substitute.For<IEnumerable<T>>();
@@ -100,14 +99,13 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.Iterate{T}(IEnumerable{T})"/> method calls <see cref="IDisposable.Dispose"/> method on
         ///     accessed enumerator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Iterate_IEnumerableOfT_Always_CallDispose()
         {
             // Fixture setup
             IFixture fixture = DomainFixture.CreateFor(this);
             IEnumerable<T> source = fixture.CreateMany<T>();
             IEnumerator<T> sourceEnumerator = source.GetEnumerator();
-
             IEnumerator<T> enumeratorMock = Substitute.For<IEnumerator<T>>();
             enumeratorMock.MoveNext().Returns(x => sourceEnumerator.MoveNext());
             IEnumerable<T> enumerable = Substitute.For<IEnumerable<T>>();
@@ -129,7 +127,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(1)]
@@ -158,7 +156,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, -1)]
         [InlineData(1, int.MinValue)]
         [InlineData(2, -1)]
@@ -190,7 +188,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 1)]
         [InlineData(1, 2)]
         [InlineData(2, int.MaxValue)]
@@ -224,7 +222,7 @@ namespace Leet.Specifications
         /// <param name="newItem">
         ///     A new item to insert at the specified location.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Insert_IEnumerableOfT_Int32_T_Always_EvaluatesLazily(int insertAt, T newItem)
         {
@@ -250,7 +248,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -285,7 +283,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -321,7 +319,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -357,7 +355,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -392,7 +390,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -427,7 +425,7 @@ namespace Leet.Specifications
         /// <param name="insertAt">
         ///     An index at which a new item should be added.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0, 0)]
         [InlineData(1, 0)]
         [InlineData(1, 1)]
@@ -456,7 +454,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method throws
         ///     an <see cref="ArgumentNullException"/> when called with <see langword="null"/> collection.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForNullCollections_Throws()
         {
             // Fixture setup
@@ -473,13 +471,37 @@ namespace Leet.Specifications
         }
 
         /// <summary>
+        ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method throws
+        ///     an <see cref="ArgumentNullException"/> when called with collection with <see langword="null"/> item.
+        /// </summary>
+        /// <param name="items">
+        ///     An enumerable collection of the source sequences for the cartesian product.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForNullItem_Throws(IEnumerable<IEnumerable<T>> items)
+        {
+            // Fixture setup
+            var collections = items.Insert(1, null);
+
+            // Exercise system
+            // Verify outcome
+            Assert.Throws<ArgumentException>(nameof(collections), () =>
+            {
+                collections.CartesianProduct();
+            });
+
+            // Teardown
+        }
+
+        /// <summary>
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method always returns
         ///     non-<see langword="null"/> collection.
         /// </summary>
         /// <param name="collection">
         ///     An enumerable collection of the source sequences for the cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_ReturnsNotNull(IEnumerable<IEnumerable<T>> collection)
         {
@@ -497,17 +519,78 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method iterates collection eagerly.
         /// </summary>
-        [Fact]
-        public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_EvaluatesEagerly()
+        /// <param name="itemCount">
+        ///     Number of item collection for the cartesian product.
+        /// </param>
+        [Paradigm]
+        [InlineData(1)]
+        [InlineData(3)]
+        public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_EvaluatesEagerly(int itemCount)
         {
             // Fixture setup
-            var collection = Substitute.For<IEnumerable<IEnumerable<T>>>();
+            IFixture fixture = DomainFixture.CreateFor(this);
+            int enumeratorsGet = 0;
+            List<IEnumerable<T>> collection = new List<IEnumerable<T>>(itemCount);
+
+            for (int i = 0; i < itemCount; ++i)
+            {
+                var sourcItem = fixture.Create<IEnumerable<T>>();
+                var item = Substitute.For<IEnumerable<T>>();
+                item.GetEnumerator().Returns(x =>
+                {
+                    ++enumeratorsGet;
+                    return sourcItem.GetEnumerator();
+                });
+
+                collection.Add(item);
+            }
 
             // Exercise system
             IEnumerable<IEnumerable<T>> result = collection.CartesianProduct();
 
             // Verify outcome
-            collection.Received(1).GetEnumerator();
+            Assert.Equal(itemCount, enumeratorsGet);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method
+        ///     iterates collections till empty collection.
+        /// </summary>
+        /// <param name="itemCount">
+        ///     Number of item collection for the cartesian product.
+        /// </param>
+        [Paradigm]
+        [InlineData(1)]
+        [InlineData(3)]
+        public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_EvaluatesTillEmpty(int itemCount)
+        {
+            // Fixture setup
+            IFixture fixture = DomainFixture.CreateFor(this);
+            int enumeratorsGet = 0;
+            List<IEnumerable<T>> collection = new List<IEnumerable<T>>(itemCount);
+
+            for (int i = 0; i < itemCount; ++i)
+            {
+                var sourcItem = fixture.Create<IEnumerable<T>>();
+                var item = Substitute.For<IEnumerable<T>>();
+                item.GetEnumerator().Returns(x =>
+                {
+                    ++enumeratorsGet;
+                    return sourcItem.GetEnumerator();
+                });
+
+                collection.Add(item);
+            }
+
+            collection.Insert(0, Enumerable.Empty<T>());
+
+            // Exercise system
+            IEnumerable<IEnumerable<T>> result = collection.CartesianProduct();
+
+            // Verify outcome
+            Assert.Equal(0, enumeratorsGet);
 
             // Teardown
         }
@@ -516,7 +599,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method iterates
         ///     each collection item eagerly.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfIEnumerableIfT_Always_EvaluatesEagerlyForEachCollection()
         {
             // Fixture setup
@@ -535,7 +618,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method returns collection
         ///     which iteration is not using source collection enumerator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_ReturnsIndependentCollection()
         {
             // Fixture setup
@@ -559,7 +642,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     An enumerable collection of the source sequences for the cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_ReturnsNewCollection(IEnumerable<IEnumerable<T>> collection)
         {
@@ -579,7 +662,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method returns
         ///     an empty collection when called with empty collection.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForEmptyCollection_ReturnsEmptyCollection()
         {
             // Fixture setup
@@ -604,7 +687,7 @@ namespace Leet.Specifications
         /// <param name="emptyCollectionIndex">
         ///     Index in the collection at which an empty collection item shall be located.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1, 0)]
         [InlineData(2, 0)]
         [InlineData(2, 1)]
@@ -634,7 +717,7 @@ namespace Leet.Specifications
         /// <param name="collectionElement">
         ///     A collection to produce cartesian product from.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForOneCollection_ReturnsSingletonsOfElements(IEnumerable<T> collectionElement)
         {
@@ -657,7 +740,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     An enumerable collection of the source sequences for the cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_Always_ReturnsSameResult(IEnumerable<IEnumerable<T>> collection)
         {
@@ -683,7 +766,7 @@ namespace Leet.Specifications
         /// <param name="collectionCount">
         ///     Number of collections to produce cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
@@ -711,7 +794,7 @@ namespace Leet.Specifications
         /// <param name="collectionCount">
         ///     Number of collections to produce cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
@@ -741,7 +824,7 @@ namespace Leet.Specifications
         /// <param name="newCollection">
         ///     A new collection item which addition shall be examined.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForNonEmptyCollection_AddsEachNewItemToEachPreviousResultItems(IEnumerable<IEnumerable<T>> collections, IEnumerable<T> newCollection)
         {
@@ -764,7 +847,7 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{IEnumerable{T}})"/> method returns correct result.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfIEnumerableOfT_ForNonEmptyCollection_ReturnsCorrectResult()
         {
             // Fixture setup
@@ -820,7 +903,7 @@ namespace Leet.Specifications
         ///     A collection that shall be passed as a second parameter to <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},IEnumerable{T})"/>
         ///     method.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_ForFirstNullCollection_Throws(IEnumerable<T> second)
         {
@@ -845,7 +928,7 @@ namespace Leet.Specifications
         ///     A collection that shall be passed as a first parameter to <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},IEnumerable{T})"/>
         ///     method.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_ForSecondNullCollection_Throws(IEnumerable<T> first)
         {
@@ -874,7 +957,7 @@ namespace Leet.Specifications
         ///     A collection that shall be passed as a second parameter to <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},IEnumerable{T})"/>
         ///     method.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_Always_ReturnsNotNull(IEnumerable<T> first, IEnumerable<T> second)
         {
@@ -893,7 +976,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},IEnumerable{T})"/> method always lazily enumerates
         ///     first collection.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_Always_EnumeratesFirstCollectionLazily()
         {
             // Fixture setup
@@ -913,7 +996,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},IEnumerable{T})"/> method always lazily enumerates
         ///     second collection.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_Always_EnumeratesSecondCollectionLazily()
         {
             // Fixture setup
@@ -939,7 +1022,7 @@ namespace Leet.Specifications
         /// <param name="second">
         ///     A second enumerable collection for cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_Always_ReturnsNewCollection(IEnumerable<T> first, IEnumerable<T> second)
         {
@@ -962,7 +1045,7 @@ namespace Leet.Specifications
         /// <param name="second">
         ///     A second enumerable collection for cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_ForFirstEmptyCollection_ReturnsEmptyResult(IEnumerable<T> second)
         {
@@ -985,7 +1068,7 @@ namespace Leet.Specifications
         /// <param name="first">
         ///     A second enumerable collection for cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_ForSecondEmptyCollection_ReturnsEmptyResult(IEnumerable<T> first)
         {
@@ -1009,7 +1092,7 @@ namespace Leet.Specifications
         /// <param name="second">
         ///     A second enumerable collection for cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_IEnumerableOfT_Always_ConformsWithIEnumerableOfIEnumerableOfT(IEnumerable<T> first, IEnumerable<T> second)
         {
@@ -1033,7 +1116,7 @@ namespace Leet.Specifications
         /// <param name="power">
         ///     A power of the cartesian product to request.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
@@ -1062,7 +1145,7 @@ namespace Leet.Specifications
         /// <param name="power">
         ///     A power of the cartesian product to request.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(-1)]
         [InlineData(int.MinValue)]
         public void CartesianProduct_IEnumerableOfT_Int32_ForNegativePower_ThrowsException(int power)
@@ -1088,7 +1171,7 @@ namespace Leet.Specifications
         /// <param name="power">
         ///     A power of the cartesian product to request.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
@@ -1112,7 +1195,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},int)"/> method always calculates
         ///     result eagerly.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfT_Int32_Always_EvaluatesEagerly()
         {
             // Fixture setup
@@ -1138,7 +1221,7 @@ namespace Leet.Specifications
         /// <param name="power">
         ///     A power of the cartesian product to request.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_Int32_Always_ReturnsNewCollection(IEnumerable<T> collection, int power)
         {
@@ -1158,7 +1241,7 @@ namespace Leet.Specifications
         ///     Checks whether <see cref="EnumerableExtensions.CartesianProduct{T}(IEnumerable{T},int)"/> method returns empty collection
         ///     when called with zero power.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void CartesianProduct_IEnumerableOfT_Int32_ForZeroPower_ReturnsEmptyCollection()
         {
             // Fixture setup
@@ -1181,7 +1264,7 @@ namespace Leet.Specifications
         /// <param name="power">
         ///     A power of the cartesian product to request.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(0)]
         [InlineData(1)]
         [InlineData(2)]
@@ -1208,7 +1291,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     A source collection for the cartesian product.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void CartesianProduct_IEnumerableOfT_Int32_Always_ConformsWithGeneralOverload(IEnumerable<T> collection)
         {
@@ -1222,6 +1305,26 @@ namespace Leet.Specifications
 
             // Verify outcome
             Assert.True(expectedResult.SequenceEqual(result, new SequenceEqualityComparer<T>()));
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether <see cref="EnumerableExtensions.AsArray{T}(IEnumerable{T})"/> method throws <see cref="ArgumentNullException"/>
+        ///     when called with <see langword="null"/> collection parameter.
+        /// </summary>
+        [Paradigm]
+        public void AsArray_IEnumerableOfT_ForNullCollection_Throws()
+        {
+            // Fixture setup
+            IEnumerable<T> collection = null;
+
+            // Exercise system
+            // Verify outcome
+            Assert.Throws<ArgumentNullException>(nameof(collection), () =>
+            {
+                collection.AsArray();
+            });
 
             // Teardown
         }

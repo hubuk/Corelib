@@ -1,6 +1,6 @@
 <Project>
 
-  <Import Project="$(MSBuildThisFileDirectory)Version.props"/>
+  <Import Project="$(MSBuildThisFileDirectory)Versions.props"/>
   <Import Project="$(MSBuildThisFileDirectory)Repository.props"/>
 
   <PropertyGroup>
@@ -43,13 +43,14 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <TreatSpecificWarningsAsErrors />
   </PropertyGroup>
-  
+
   <ItemGroup>
     <AdditionalFiles Include="$(MSBuildThisFileDirectory)StyleCop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta001" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="$(StyleCopAnalyzersVersion)" PrivateAssets="All" />
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="$(SourceLinkVersion)" PrivateAssets="All" />
   </ItemGroup>
-  
+
 </Project>

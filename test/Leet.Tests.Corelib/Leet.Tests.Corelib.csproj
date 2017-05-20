@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net46</TargetFrameworks>
     <RootNamespace>Leet</RootNamespace>
     <Description>A library package that contains tests for Leet.Corelib library package.</Description>
   </PropertyGroup>
@@ -9,43 +9,8 @@
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), appveyor.yml))\build\Common.Tests.props" />
 
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="3.50.2" />
-    <PackageReference Include="AutoFixture.AutoNSubstitute" Version="3.50.2" />
-    <PackageReference Include="AutoFixture.Xunit2" Version="3.50.2" />
-    <PackageReference Include="NSubstitute" Version="2.0.2" />
-    <PackageReference Include="xunit" Version="2.3.0-*" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0-*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-*" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Leet.Corelib\Leet.Corelib.csproj" />
+    <ProjectReference Include="..\..\src\Leet.Testing\Leet.Testing.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\TestResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>TestResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\TestResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>TestResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  
 </Project>

@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0;net46</TargetFrameworks>
+    <RootNamespace>Leet</RootNamespace>
+    <Description>A library package that contains tests for Leet.Testing library package.</Description>
+  </PropertyGroup>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), appveyor.yml))\build\Common.Tests.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Leet.Testing\Leet.Testing.csproj" />
+    <ProjectReference Include="..\Leet.Tests.Corelib\Leet.Tests.Corelib.csproj" />
+  </ItemGroup>
+  
+</Project>

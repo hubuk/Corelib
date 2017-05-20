@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IDisposableSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,7 +9,7 @@
 namespace Leet.Specifications
 {
     using System;
-    using Xunit;
+    using Leet.Testing;
 
     /// <summary>
     ///     A class that specifies behavior for <see cref="IDisposable"/> interface.
@@ -17,7 +17,7 @@ namespace Leet.Specifications
     /// <typeparam name="TSut">
     ///     Type which shall be tested for conformance with behavior defined for <see cref="IDisposable"/> interface.
     /// </typeparam>
-    public abstract class IDisposableSpecification<TSut>
+    public abstract class IDisposableSpecification<TSut> : InstanceSpecification<TSut>
         where TSut : IDisposable
     {
         /// <summary>
@@ -26,7 +26,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Dispose_Void_Never_Throws(TSut sut)
         {

@@ -8,6 +8,7 @@
 
 namespace Leet.Specifications
 {
+    using Leet.Testing;
     using Xunit;
 
     /// <summary>
@@ -16,15 +17,20 @@ namespace Leet.Specifications
     /// <typeparam name="TSut">
     ///     Type which shall be tested for conformance with behavior defined for <see cref="object"/> class.
     /// </typeparam>
-    public abstract class ObjectSpecification<TSut>
+    public abstract class ObjectSpecification<TSut> : InstanceSpecification<TSut>
     {
+        /// <summary>
+        ///     Name of the <c>Finalize</c> method.
+        /// </summary>
+        protected const string MemberName_Finalize = "Finalize";
+
         /// <summary>
         ///     Checks whether <see cref="object.ToString()"/> method returns non-<see langword="null"/> reference.
         /// </summary>
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void ToString_Void_Always_ReturnsNotNull(TSut sut)
         {
@@ -45,7 +51,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_Object_CalledWithNull_ReturnsFalse(TSut sut)
         {
@@ -66,7 +72,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_Object_CalledWithThis_ReturnsTrue(TSut sut)
         {
@@ -90,7 +96,7 @@ namespace Leet.Specifications
         /// <param name="other">
         ///     Other instance to compare ro.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_Object_ForSwappedInstances_ReturnsSameResult(TSut sut, TSut other)
         {
@@ -112,7 +118,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_Object_ForDifferentType_ReturnsFalse(TSut sut)
         {
@@ -134,7 +140,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void GetHashCode_Void_Alwyas_ReturnsSameValue(TSut sut)
         {

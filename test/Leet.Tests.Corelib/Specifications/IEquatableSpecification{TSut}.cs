@@ -9,7 +9,8 @@
 namespace Leet.Specifications
 {
     using System;
-    using System.Reflection;
+    using Leet.Testing;
+    using Leet.Testing.Reflection;
     using Xunit;
 
     /// <summary>
@@ -28,7 +29,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_TSut_ForSameInstance_ReturnsTrue(TSut sut)
         {
@@ -53,7 +54,7 @@ namespace Leet.Specifications
         /// <param name="other">
         ///     Other instance to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_TSut_ForSwappedInstances_ReturnsSameResult(TSut sut, TSut other)
         {
@@ -76,7 +77,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticEquals_TSut_TSut_ForSameInstance_ReturnsTrue(TSut sut)
         {
@@ -84,7 +85,7 @@ namespace Leet.Specifications
             Type sutType = typeof(TSut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("Equals", sut, sut);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "Equals", sut, sut);
 
             // Verify outcome
             Assert.True(result);
@@ -102,16 +103,16 @@ namespace Leet.Specifications
         /// <param name="other">
         ///     Other instance to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticEquals_TSut_T_ForSwappedInstances_ReturnsSameResult(TSut sut, TSut other)
         {
             // Fixture setup
             Type sutType = typeof(TSut);
-            bool expectedResult = (bool)sutType.InvokePublicMethod("Equals", other, sut);
+            bool expectedResult = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "Equals", other, sut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("Equals", sut, other);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "Equals", sut, other);
 
             // Verify outcome
             Assert.Equal(expectedResult, result);
@@ -122,22 +123,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> defaines a <see langword="static"/> <c>op_Equality(TSut,TSut)</c> operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Defines_StaticEqualityTSutTSutOperator_OrIsReferenceType()
         {
             // Fixture setup
             Type sutType = typeof(TSut);
+            string methodName = OperatorNames.op_Equality;
+            Type[] parameters = new Type[] { typeof(TSut), typeof(TSut) };
 
             // Exercise system
-            MethodInfo method = sutType.GetMethod(
-                "op_Equality",
-                BindingFlags.Static | BindingFlags.Public,
-                Type.DefaultBinder,
-                new Type[] { typeof(TSut), typeof(TSut) },
-                null);
+            bool result = sutType.IsMethodDeclared(MemberDefinitionDetails.Static, methodName, typeof(bool), parameters);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(method, null) || !typeof(TSut).IsValueType);
+            Assert.True(result || !typeof(TSut).IsValueType);
 
             // Teardown
         }
@@ -145,22 +143,19 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> defaines a <see langword="static"/> <c>op_Inequality(TSut,TSut)</c> operator.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Defines_StaticInequalityTSutTSutOperator_OrIsReferenceType()
         {
             // Fixture setup
             Type sutType = typeof(TSut);
+            string methodName = OperatorNames.op_Inequality;
+            Type[] parameters = new Type[] { typeof(TSut), typeof(TSut) };
 
             // Exercise system
-            MethodInfo method = sutType.GetMethod(
-                "op_Inequality",
-                BindingFlags.Static | BindingFlags.Public,
-                Type.DefaultBinder,
-                new Type[] { typeof(TSut), typeof(TSut) },
-                null);
+            bool result = sutType.IsMethodDeclared(MemberDefinitionDetails.Static, methodName, typeof(bool), parameters);
 
             // Verify outcome
-            Assert.True(!object.ReferenceEquals(method, null) || !typeof(TSut).IsValueType);
+            Assert.True(result || !typeof(TSut).IsValueType);
 
             // Teardown
         }
@@ -172,7 +167,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void OperatorEquality_TSut_TSut_ForSameInstance_ReturnsTrue(TSut sut)
         {
@@ -180,7 +175,7 @@ namespace Leet.Specifications
             Type sutType = typeof(TSut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("op_Equality", sut, sut);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Equality", sut, sut);
 
             // Verify outcome
             Assert.True(result);
@@ -198,16 +193,16 @@ namespace Leet.Specifications
         /// <param name="other">
         ///     Other instance to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void OperatorEquality_TSut_TSut_ForSwappedInstances_ReturnsSameResult(TSut sut, TSut other)
         {
             // Fixture setup
             Type sutType = typeof(TSut);
-            bool expectedResult = (bool)sutType.InvokePublicMethod("op_Equality", other, sut);
+            bool expectedResult = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Equality", other, sut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("op_Equality", sut, other);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Equality", sut, other);
 
             // Verify outcome
             Assert.Equal(expectedResult, result);
@@ -222,7 +217,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void OperatorInequality_TSut_TSut_ForSameInstance_ReturnsFalse(TSut sut)
         {
@@ -230,7 +225,7 @@ namespace Leet.Specifications
             Type sutType = typeof(TSut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("op_Inequality", sut, sut);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Inequality", sut, sut);
 
             // Verify outcome
             Assert.False(result);
@@ -248,16 +243,16 @@ namespace Leet.Specifications
         /// <param name="other">
         ///     Other instance to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void OperatorInequality_TSut_TSut_ForSwappedInstances_ReturnsSameResult(TSut sut, TSut other)
         {
             // Fixture setup
             Type sutType = typeof(TSut);
-            bool expectedResult = (bool)sutType.InvokePublicMethod("op_Inequality", other, sut);
+            bool expectedResult = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Inequality", other, sut);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("op_Inequality", sut, other);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, "op_Inequality", sut, other);
 
             // Verify outcome
             Assert.Equal(expectedResult, result);

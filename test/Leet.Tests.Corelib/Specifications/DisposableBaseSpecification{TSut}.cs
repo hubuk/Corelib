@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DisposableBaseSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,7 +9,9 @@
 namespace Leet.Specifications
 {
     using System;
-    using Leet;
+    using System.Linq;
+    using Leet.Testing;
+    using Leet.Testing.Reflection;
     using NSubstitute;
     using Xunit;
 
@@ -23,6 +25,21 @@ namespace Leet.Specifications
         : ObjectSpecification<TSut>
         where TSut : DisposableBase
     {
+        /// <summary>
+        ///     Name of the <see cref="DisposableBase.IsDisposed"/> property.
+        /// </summary>
+        protected const string MemberName_IsDisposed = "IsDisposed";
+
+        /// <summary>
+        ///     Name of the <see cref="DisposableBase.Dispose()"/> method overloads.
+        /// </summary>
+        protected const string MemberName_Dispose = "Dispose";
+
+        /// <summary>
+        ///     Name of the <see cref="DisposableBase.ThrowIfDisposed()"/> method overloads.
+        /// </summary>
+        protected const string MemberName_ThrowIfDisposed = "ThrowIfDisposed";
+
         /// <summary>
         ///     Gets a value indicating whether the <typeparamref name="TSut"/> has finalizer defined which behavior
         ///     shall be taken into account.
@@ -39,17 +56,17 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.Dispose()"/> for the first time calls
         ///     <see cref="DisposableBase.Dispose(bool)"/> method with <see langword="true"/> argument.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_CalledFirstTime_CallsDisposeTrue()
         {
             // Fixture setup
-            TSut sut = Substitute.For<TSut>();
+            TSut sut = Substitute.ForPartsOf<TSut>();
 
             // Exercise system
             sut.Dispose();
 
             // Verify outcome
-            sut.Received(1).InvokeProtectedMethod("Dispose", true);
+            sut.Received(1).InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, true);
 
             // Teardown
         }
@@ -58,7 +75,7 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.Dispose()"/> for the first time does not call
         ///     <see cref="DisposableBase.Dispose(bool)"/> method with <see langword="false"/> argument.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_CalledFirstTime_DoesNotCallDisposeFalse()
         {
             // Fixture setup
@@ -68,7 +85,7 @@ namespace Leet.Specifications
             sut.Dispose();
 
             // Verify outcome
-            sut.DidNotReceive().InvokeProtectedMethod("Dispose", false);
+            sut.DidNotReceive().InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, false);
 
             // Teardown
         }
@@ -77,7 +94,7 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.Dispose()"/> for the first time sets <see cref="DisposableBase.IsDisposed"/>
         ///     property to <see langword="true"/>.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_CalledFirstTime_SetsIsDisposed()
         {
             // Fixture setup
@@ -85,9 +102,10 @@ namespace Leet.Specifications
 
             // Exercise system
             sut.Dispose();
+            bool isDisposedValue = (bool)sut.GetPropertyValue(MemberVisibilityFlags.Family, MemberName_IsDisposed);
 
             // Verify outcome
-            Assert.True((bool)sut.GetProtectedPropertyValue("IsDisposed"));
+            Assert.True(isDisposedValue);
 
             // Teardown
         }
@@ -96,7 +114,7 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.Dispose()"/> for the second time does not call
         ///     <see cref="DisposableBase.Dispose(bool)"/> method with <see cref="bool"/> argument.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_CalledSecondTime_DoesNotCallProtectedDispose()
         {
             // Fixture setup
@@ -108,7 +126,7 @@ namespace Leet.Specifications
             sut.Dispose();
 
             // Verify outcome
-            sut.DidNotReceive().InvokeProtectedMethod("Dispose", Arg.Any<bool>());
+            sut.DidNotReceive().InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, Arg.Any<bool>());
 
             // Teardown
         }
@@ -117,7 +135,7 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.Dispose()"/> for the second time does not change value of
         ///     <see cref="DisposableBase.IsDisposed"/> property.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_CalledSecondTime_DoesNotChangeIsDisposedValue()
         {
             // Fixture setup
@@ -127,29 +145,27 @@ namespace Leet.Specifications
 
             // Exercise system
             sut.Dispose();
+            bool isDisposedValue = (bool)sut.GetPropertyValue(MemberVisibilityFlags.Family, MemberName_IsDisposed);
 
             // Verify outcome
-            Assert.True((bool)sut.GetProtectedPropertyValue("IsDisposed"));
+            Assert.True(isDisposedValue);
 
             // Teardown
         }
 
         /// <summary>
-        ///     Checks whether calling <see cref="DisposableBase.ThrowIfDisposed"/> throws an <see cref="ObjectDisposedException"/>
+        ///     Checks whether calling<see cref="DisposableBase.ThrowIfDisposed"/> throws an<see cref="ObjectDisposedException"/>
         ///     when called on disposed object.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void ThrowIfDisposed_Void_ForDisposedInstance_Throws()
         {
             // Fixture setup
-            TSut sut = Substitute.For<TSut>();
+            TSut sut = Substitute.ForPartsOf<TSut>();
             sut.Dispose();
 
             // Exercise system
-            Assert.Throws<ObjectDisposedException>((Action)(() =>
-            {
-                throw sut.InvokeProtectedMethodWithException("ThrowIfDisposed");
-            }));
+            Assert.NotNull(sut.InvokeMethodWithException<ObjectDisposedException>(MemberVisibilityFlags.Family, MemberName_ThrowIfDisposed));
 
             // Teardown
         }
@@ -158,15 +174,15 @@ namespace Leet.Specifications
         ///     Checks whether calling <see cref="DisposableBase.ThrowIfDisposed"/> does not throw an <see cref="Exception"/>
         ///     when called on not disposed object.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void ThrowIfDisposed_Void_ForNotDisposedInstance_DoesNotThrow()
         {
             // Fixture setup
-            TSut sut = Substitute.For<TSut>();
+            TSut sut = Substitute.ForPartsOf<TSut>();
 
             // Exercise system
             // Verify outcome
-            sut.InvokeProtectedMethod("ThrowIfDisposed");
+            sut.InvokeMethod(MemberVisibilityFlags.Family, MemberName_ThrowIfDisposed);
 
             // Teardown
         }
@@ -174,13 +190,13 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether an object finalizer always calls dispose method with <see langword="false"/> parameter.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Finalize_Void_Always_CallsDisposeFalse()
         {
             // Fixture setup
             TSut sut = Substitute.For<TSut>();
             int actualFinalizationCount = 0;
-            sut.When(disposableBase => disposableBase.InvokeProtectedMethod("Dispose", false)).Do(x => ++actualFinalizationCount);
+            sut.When(disposableBase => disposableBase.InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, false)).Do(x => ++actualFinalizationCount);
             int expectedFinalizationCount = this.HasFinalizer ? 1 : 0;
 
             // Exercise system
@@ -197,13 +213,13 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether an object finalizer never calls dispose method with <see langword="true"/> parameter.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Finalize_Void_Never_CallsDisposeTrue()
         {
             // Fixture setup
             TSut sut = Substitute.For<TSut>();
             int actualDispositionCount = 0;
-            sut.When(disposableBase => disposableBase.InvokeProtectedMethod("Dispose", true)).Do(x => ++actualDispositionCount);
+            sut.When(disposableBase => disposableBase.InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, true)).Do(x => ++actualDispositionCount);
             int expectedDispositionCount = 0;
 
             // Exercise system
@@ -220,13 +236,13 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <see cref="IDisposable.Dispose()"/> method always supresses object finalization.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Dispose_Void_Always_SpressesFinalization()
         {
             // Fixture setup
             TSut sut = Substitute.For<TSut>();
             int actualFinalizationCount = 0;
-            sut.When(disposableBase => disposableBase.InvokeProtectedMethod("Dispose", false)).Do(x => ++actualFinalizationCount);
+            sut.When(disposableBase => disposableBase.InvokeMethod(MemberVisibilityFlags.Family, MemberName_Dispose, false)).Do(x => ++actualFinalizationCount);
             int expectedFincalizationCount = 0;
 
             // Exercise system
@@ -242,18 +258,21 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="DisposableBase"/> constructor does not sets <see cref="DisposableBase.IsDisposed"/>
-        ///     property.
+        ///     Checks whether the <typeparamref name="TSut"/> has no additional <see cref="IDisposable"/> interfaace declared.
         /// </summary>
-        [Fact]
-        internal void Constructor_Void_Never_CallsSetIsDisposed()
+        [Paradigm]
+        public void TSut_Has_OnlyOneIDisposableDeclaration()
         {
             // Fixture setup
+            Type sutType = typeof(TSut);
+            Type iDisposableType = typeof(IDisposable);
+            int expected = 1;
+
             // Exercise system
-            DisposableBase sut = Substitute.For<DisposableBase>();
+            var result = sutType.GetTypeHierarchy().Count(type => type.DeclaresInterface(iDisposableType));
 
             // Verify outcome
-            Assert.False((bool)sut.GetProtectedPropertyValue("IsDisposed"));
+            Assert.Equal(expected, result);
 
             // Teardown
         }

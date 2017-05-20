@@ -1,0 +1,14 @@
+<Project>
+
+  <PropertyGroup>
+    <VersionPrefix>0.0.2</VersionPrefix>
+    <AutoFixtureVersion>4.0.0-alpha.269</AutoFixtureVersion>
+    <SourceLinkVersion>2.4.0</SourceLinkVersion>
+    <StyleCopAnalyzersVersion>1.1.0-beta004</StyleCopAnalyzersVersion>
+    <XunitVersion>2.3.0</XunitVersion>
+    <NSubstituteVersion>3.0.1</NSubstituteVersion>
+    <CastleVersion>4.2.1</CastleVersion>
+    <MicrosoftNetTestSdkVersion>15.5.0-preview-20170923-02</MicrosoftNetTestSdkVersion>
+  </PropertyGroup>
+
+</Project>

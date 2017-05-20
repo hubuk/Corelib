@@ -9,7 +9,9 @@
 namespace Leet.Specifications
 {
     using System;
-    using System.Reflection;
+    using Leet.Testing;
+    using Leet.Testing.Assertions;
+    using Leet.Testing.Reflection;
     using Xunit;
 
     /// <summary>
@@ -21,9 +23,14 @@ namespace Leet.Specifications
     /// <typeparam name="T">
     ///     The type of objects to compare.
     /// </typeparam>
-    public abstract class IEquatableSpecification<TSut, T>
+    public abstract class IEquatableSpecification<TSut, T> : InstanceSpecification<TSut>
         where TSut : IEquatable<T>
     {
+        /// <summary>
+        ///     The constant name of the <c>Equals</c> member.
+        /// </summary>
+        protected const string MemberName_Equals = "Equals";
+
         /// <summary>
         ///     Checks whether <see cref="IEquatable{T}.Equals(T)"/> method returns correct result
         ///     for default instance parameter.
@@ -31,7 +38,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_T_ForDefaultInstance_ReturnsCorrectResult(TSut sut)
         {
@@ -50,22 +57,20 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> defaines a <see langword="static"/> <c>Equals(TSut,T)</c> method.
         /// </summary>
-        [Fact]
-        public void Type_Defines_StaticEqualsTSutTMethod()
+        [Paradigm]
+        public void Type_Implements_StaticEqualsTSutTMethod()
         {
             // Fixture setup
             Type sutType = typeof(TSut);
+            string methodName = MemberName_Equals;
+            Type[] parameterTypes = new Type[]
+            {
+                typeof(TSut), typeof(T),
+            };
 
             // Exercise system
-            MethodInfo method = sutType.GetMethod(
-                "Equals",
-                BindingFlags.Static | BindingFlags.Public,
-                Type.DefaultBinder,
-                new Type[] { typeof(TSut), typeof(T) },
-                null);
-
             // Verify outcome
-            Assert.NotNull(method);
+            AssertType.HasMethod(sutType, MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -73,22 +78,20 @@ namespace Leet.Specifications
         /// <summary>
         ///     Checks whether <typeparamref name="TSut"/> defaines a <see langword="static"/> <c>Equals(T,TSut)</c> method.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Type_Defines_StaticEqualsTTSutMethod()
         {
             // Fixture setup
             Type sutType = typeof(TSut);
+            string methodName = MemberName_Equals;
+            Type[] parameterTypes = new Type[]
+            {
+                typeof(T), typeof(TSut),
+            };
 
             // Exercise system
-            MethodInfo method = sutType.GetMethod(
-                "Equals",
-                BindingFlags.Static | BindingFlags.Public,
-                Type.DefaultBinder,
-                new Type[] { typeof(T), typeof(TSut) },
-                null);
-
             // Verify outcome
-            Assert.NotNull(method);
+            AssertType.HasMethod(sutType, MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
 
             // Teardown
         }
@@ -100,7 +103,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticEquals_TSut_T_ForDefaultInstance_ReturnsCorrectResult(TSut sut)
         {
@@ -109,7 +112,7 @@ namespace Leet.Specifications
             T other = default(T);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("Equals", sut, other);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, MemberName_Equals, sut, other);
 
             // Verify outcome
             Assert.True(!object.ReferenceEquals(other, null) || !result);
@@ -124,7 +127,7 @@ namespace Leet.Specifications
         /// <param name="sut">
         ///     Object under test.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void StaticEquals_T_TSut_ForDefaultInstance_ReturnsCorrectResult(TSut sut)
         {
@@ -133,7 +136,7 @@ namespace Leet.Specifications
             T other = default(T);
 
             // Exercise system
-            bool result = (bool)sutType.InvokePublicMethod("Equals", sut, other);
+            bool result = (bool)sutType.InvokeMethod(MemberVisibilityFlags.Public, MemberName_Equals, other, sut);
 
             // Verify outcome
             Assert.True(!object.ReferenceEquals(other, null) || !result);

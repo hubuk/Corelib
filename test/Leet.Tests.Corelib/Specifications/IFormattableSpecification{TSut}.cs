@@ -11,6 +11,9 @@ namespace Leet.Specifications
     using System;
     using System.Globalization;
     using System.Reflection;
+    using Leet.Testing;
+    using Leet.Testing.Assertions;
+    using Leet.Testing.Reflection;
     using NSubstitute;
     using Ploeh.AutoFixture;
     using Xunit;
@@ -21,9 +24,19 @@ namespace Leet.Specifications
     /// <typeparam name="TSut">
     ///     Type which shall be tested for conformance with behavior defined for <see cref="IFormattable"/> interface.
     /// </typeparam>
-    public abstract class IFormattableSpecification<TSut>
+    public abstract class IFormattableSpecification<TSut> : InstanceSpecification<TSut>
         where TSut : IFormattable
     {
+        /// <summary>
+        ///     The name of the <c>Parse</c> member.
+        /// </summary>
+        protected const string MemberName_Parse = "Parse";
+
+        /// <summary>
+        ///     The name of the <c>TryParse</c> member.
+        /// </summary>
+        protected const string MemberName_TryParse = "TryParse";
+
         /// <summary>
         ///     Checks whether <see cref="IFormattable.ToString(string, IFormatProvider)"/> method accepts
         ///     <see langword="null"/> format provider parameter.
@@ -31,7 +44,7 @@ namespace Leet.Specifications
         /// <param name="format">
         ///     The format to use.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(null)]
         [InlineData("")]
         [InlineData("G")]
@@ -55,7 +68,7 @@ namespace Leet.Specifications
         /// <param name="format">
         ///     The format to use.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(null)]
         [InlineData("")]
         [InlineData("G")]
@@ -81,7 +94,7 @@ namespace Leet.Specifications
         /// <param name="format">
         ///     The format to use.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(null)]
         [InlineData("")]
         [InlineData("G")]
@@ -106,7 +119,7 @@ namespace Leet.Specifications
         /// <param name="format">
         ///     The format to use.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(null)]
         [InlineData("")]
         [InlineData("G")]
@@ -130,17 +143,17 @@ namespace Leet.Specifications
         ///     Checks whether <typeparamref name="TSut"/> type has defined <see langword="static"/> method
         ///     <c>Parse</c> that accepts one parameter, <see cref="string"/>.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Parse_String_Is_Defined()
         {
             // Fixture setup
             Type type = typeof(TSut);
+            string methodName = MemberName_Parse;
+            Type[] parameterTypes = new Type[] { typeof(string) };
 
             // Exercise system
-            MethodInfo method = type.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static, Type.DefaultBinder, new Type[] { typeof(string) }, null);
-
             // Verify outcome
-            Assert.NotNull(method);
+            AssertType.HasMethod(type, MemberDefinitionDetails.Static, methodName, type, parameterTypes);
 
             // Teardown
         }
@@ -149,18 +162,20 @@ namespace Leet.Specifications
         ///     Checks whether <typeparamref name="TSut"/> type has defined <see langword="static"/> method
         ///     <c>TryParse</c> that accepts one parameter, <see cref="string"/>.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void TryParse_String_OutTSut_Is_Defined()
         {
             // Fixture setup
             Type type = typeof(TSut);
+            string methodName = MemberName_TryParse;
+            Type[] parameterTypes = new Type[] { typeof(string), typeof(TSut).MakeByRefType() };
 
             // Exercise system
-            MethodInfo method = type.GetMethod("TryParse", BindingFlags.Public | BindingFlags.Static, Type.DefaultBinder, new Type[] { typeof(string), typeof(TSut).MakeByRefType() }, null);
-            ParameterInfo parameter = method.GetParameters()[1];
+            MethodInfo method = type.GetMethod(MemberDefinitionDetails.Static, methodName, typeof(bool), parameterTypes);
+            bool isOut = method.GetParameters()[1].IsOut;
 
             // Verify outcome
-            Assert.True(parameter.IsOut);
+            Assert.True(isOut);
 
             // Teardown
         }
@@ -169,7 +184,7 @@ namespace Leet.Specifications
         ///     Checks whether a static method <c>Parse</c> defined on <typeparamref name="TSut"/> type throws
         ///     an <see cref="ArgumentNullException"/> when called with <see langword="null"/> <see cref="string"/> parameter.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void Parse_String_WithNullString_Throws()
         {
             // Fixture setup
@@ -177,10 +192,7 @@ namespace Leet.Specifications
 
             // Exercise system
             // Verify outcome
-            Assert.Throws<ArgumentNullException>((Action)(() =>
-            {
-                throw type.InvokePublicMethodWithException("Parse", new object[] { null });
-            }));
+            Assert.NotNull(type.InvokeMethodWithException<ArgumentNullException>(MemberVisibilityFlags.Public, MemberName_Parse, new object[] { null }));
 
             // Teardown
         }
@@ -189,20 +201,18 @@ namespace Leet.Specifications
         ///     Checks whether a static method <c>TryParse</c> defined on <typeparamref name="TSut"/> type returns
         ///     <see langword="false"/> when called with <see langword="null"/> <see cref="string"/> parameter.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void TryParse_String_WithNullString_ReturnsFalse()
         {
             // Fixture setup
             Type type = typeof(TSut);
             TSut result = default(TSut);
+            string methodName = MemberName_TryParse;
+            Type[] parameterTypes = new Type[] { typeof(string), typeof(TSut).MakeByRefType() };
+            object[] arguments = new object[] { null, result };
 
             // Exercise system
-            bool returnValue = (bool)type.InvokeMember(
-                "TryParse",
-                BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static,
-                Type.DefaultBinder,
-                null,
-                new object[] { null, result });
+            bool returnValue = (bool)type.InvokeMethod(MemberVisibilityFlags.Public, methodName, parameterTypes, arguments);
 
             // Verify outcome
             Assert.False(returnValue);
@@ -214,20 +224,18 @@ namespace Leet.Specifications
         ///     Checks whether a static method <c>TryParse</c> defined on <typeparamref name="TSut"/> type returns
         ///     default instance of the <typeparamref name="TSut"/> for <see langword="null"/> <see cref="string"/> parameter.
         /// </summary>
-        [Fact]
+        [Paradigm]
         public void TryParse_String_WithNullString_ReturnsDefaultvalue()
         {
             // Fixture setup
             Type type = typeof(TSut);
             TSut result = default(TSut);
+            string methodName = MemberName_TryParse;
+            Type[] parameterTypes = new Type[] { typeof(string), typeof(TSut).MakeByRefType() };
+            object[] arguments = new object[] { null, result };
 
             // Exercise system
-            type.InvokeMember(
-                "TryParse",
-                BindingFlags.InvokeMethod | BindingFlags.Public | BindingFlags.Static,
-                Type.DefaultBinder,
-                null,
-                new object[] { null, result });
+            bool returnValue = (bool)type.InvokeMethod(MemberVisibilityFlags.Public, methodName, parameterTypes, arguments);
 
             // Verify outcome
             Assert.Equal(default(TSut), result);

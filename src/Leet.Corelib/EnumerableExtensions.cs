@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="EnumerableExtensions.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -11,7 +11,7 @@ namespace Leet
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Properties;
+    using Leet.Properties;
 
     /// <summary>
     ///     A <see langword="static"/> class that contains extension methods for <see cref="IEnumerable{T}"/> class.
@@ -37,7 +37,7 @@ namespace Leet
                 throw new ArgumentNullException(nameof(source));
             }
 
-            using (var enumerator = source.GetEnumerator())
+            using (IEnumerator<T> enumerator = source.GetEnumerator())
             {
                 while (enumerator.MoveNext())
                 {
@@ -187,6 +187,11 @@ namespace Leet
                 throw new ArgumentNullException(nameof(collections));
             }
 
+            if (collections.Any(collection => object.ReferenceEquals(collection, null)))
+            {
+                throw new ArgumentException(Resources.Exception_Argument_CollectionElementNull, nameof(collections));
+            }
+
             if (!collections.Any() || collections.Any(collection => !collection.Any()))
             {
                 return Enumerable.Empty<IEnumerable<T>>();
@@ -199,15 +204,39 @@ namespace Leet
               emptyProduct,
               (accumulator, sequence) =>
               {
-                  if (object.ReferenceEquals(sequence, null))
-                  {
-                      throw new ArgumentException(Resources.Exception_Argument_CollectionElementNull, nameof(collections));
-                  }
-
                   return from accseq in accumulator
                          from item in sequence
                          select accseq.Concat(new[] { item });
               });
+        }
+
+        /// <summary>
+        ///     Obtains an array that corresponds to the specified collection by direct cast if the collection is in fact an array
+        ///     or creates a new array with the content taken from the specified collection.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     Type of the collection items.
+        /// </typeparam>
+        /// <param name="collection">
+        ///     Collection to convert.
+        /// </param>
+        /// <returns>
+        ///     An array that corresponds to the specified collection.
+        /// </returns>
+        public static T[] AsArray<T>(this IEnumerable<T> collection)
+        {
+            if (object.ReferenceEquals(collection, null))
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
+            var result = collection as T[];
+            if (object.ReferenceEquals(result, null))
+            {
+                result = collection.ToArray();
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -235,7 +264,7 @@ namespace Leet
         /// </exception>
         private static IEnumerable<T> InsertCore<T>(this IEnumerable<T> source, int insertAt, T item)
         {
-            int index = 0;
+            var index = 0;
 
             foreach (T oldItem in source)
             {

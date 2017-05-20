@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="SequenceEqualityComparerSpecification{TSut,T}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -11,7 +11,7 @@ namespace Leet.Specifications
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Leet;
+    using Leet.Testing;
     using NSubstitute;
     using Ploeh.AutoFixture;
     using Xunit;
@@ -36,7 +36,7 @@ namespace Leet.Specifications
         /// <param name="items">
         ///     Enumerable collection of items to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_IEnumerableOfT_IEnumerableOfT_ForEnumerableAndArrayWithSameElements_ReturnsTrue(IEnumerable<T> items)
         {
@@ -61,7 +61,7 @@ namespace Leet.Specifications
         /// <param name="subcollectionSize">
         ///     Size of the smaller collection.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1, 0)]
         [InlineData(2, 0)]
         [InlineData(2, 1)]
@@ -91,7 +91,7 @@ namespace Leet.Specifications
         /// <param name="subcollectionSize">
         ///     Size of the smaller collection.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1, 0)]
         [InlineData(2, 0)]
         [InlineData(2, 1)]
@@ -121,7 +121,7 @@ namespace Leet.Specifications
         /// <param name="differentItemsIndex">
         ///     Index at which a different item shall be located.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1, 0)]
         [InlineData(2, 0)]
         [InlineData(2, 1)]
@@ -154,7 +154,7 @@ namespace Leet.Specifications
         /// <param name="differentItemsIndex">
         ///     Index at which a different item shall be located.
         /// </param>
-        [Theory]
+        [Paradigm]
         [InlineData(1, 0)]
         [InlineData(2, 0)]
         [InlineData(2, 1)]
@@ -186,7 +186,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     A collection instance to compare to itself.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_IEnumerableOfT_IEnumerableOfT_ForSameReferences_ReturnsTrue(IEnumerable<T> collection)
         {
@@ -210,7 +210,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     A collection instance to compare to itself.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_IEnumerableOfT_IEnumerableOfT_ForSameInstances_NeverComparesItems(IEnumerable<T> collection)
         {
@@ -236,7 +236,7 @@ namespace Leet.Specifications
         /// <param name="collection">
         ///     A collection instance to compare to itself.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
         public void Equals_IEnumerableOfT_IEnumerableOfT_ForSameSequences_ReturnsAccordingToItemComparer(IEnumerable<T> collection)
         {
@@ -256,63 +256,72 @@ namespace Leet.Specifications
         }
 
         /// <summary>
-        ///     Checks whether <see cref="SequenceEqualityComparer{T}(IEqualityComparer{T})"/> constructor throws
-        ///     an <see cref="ArgumentNullException"/> when called with <see langword="null"/> item's comparer.
+        ///     Checks whether <see cref="SequenceEqualityComparer{T}.GetHashCode(IEnumerable{T})"/> method returns
+        ///     <see langword="true"/> if called with two collection of different type, but same values.
         /// </summary>
-        [Fact]
-        internal void Constructor_IEqualityComparerOfT_ForNullItemComparer_Throws()
+        /// <param name="items">
+        ///     Enumerable collection of items to compare.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void GetHashCode_IEnumerableOfT_ForEnumerableAndArrayWithSameElements_ReturnsSameHashCode(IEnumerable<T> items)
         {
             // Fixture setup
-            IEqualityComparer<T> itemComparer = null;
+            SequenceEqualityComparer<T> sut = new SequenceEqualityComparer<T>();
+            T[] array = items.ToArray();
+
+            // Exercise system
+            var first = sut.GetHashCode(items);
+            var second = sut.GetHashCode(array);
+
+            // Verify outcome
+            Assert.Equal(first, second);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether <see cref="SequenceEqualityComparer{T}.GetHashCode(IEnumerable{T})"/> method
+        ///     thrown an exception when called with <see langword="null"/> parameter.
+        /// </summary>
+        [Paradigm]
+        public void GetHashCode_IEnumerableOfT_CalledWithNullObject_ThrowsException()
+        {
+            // Fixture setup
+            SequenceEqualityComparer<T> sut = new SequenceEqualityComparer<T>();
+            IEnumerable<T> obj = null;
 
             // Exercise system
             // Verify outcome
-            Assert.Throws<ArgumentNullException>(nameof(itemComparer), () =>
+            Assert.Throws<ArgumentNullException>(nameof(obj), () =>
             {
-                new SequenceEqualityComparer<T>(itemComparer);
+                sut.GetHashCode(obj);
             });
 
             // Teardown
         }
 
         /// <summary>
-        ///     Checks whether <see cref="SequenceEqualityComparer{T}(IEqualityComparer{T})"/> constructor assigns its parameter to
-        ///     <see cref="SequenceEqualityComparer{T}.ItemComparer"/> property.
+        ///     Checks whether <see cref="SequenceEqualityComparer{T}.GetHashCode(IEnumerable{T})"/> method
+        ///     always evaluates using item comparer.
         /// </summary>
-        /// <param name="itemComparer">
-        ///     A collection item's comparer.
+        /// <param name="items">
+        ///     Enumerable collection of items to compare.
         /// </param>
-        [Theory]
+        [Paradigm]
         [AutoDomainData]
-        internal void Constructor_IEqualityComparerOfT_Always_AssignsItemComparer(IEqualityComparer<T> itemComparer)
+        public void GetHashCode_IEnumerableOfT_Always_EvaluatesBasedOnItemComparer(IEnumerable<T> items)
         {
             // Fixture setup
-            SequenceEqualityComparer<T> sut = new SequenceEqualityComparer<T>(itemComparer);
+            IFixture fixture = DomainFixture.CreateFor(this);
+            IEqualityComparer<T> itemsComparer = Substitute.For<IEqualityComparer<T>>();
+            SequenceEqualityComparer<T> sut = new SequenceEqualityComparer<T>(itemsComparer);
 
             // Exercise system
-            IEqualityComparer<T> storedComparer = sut.ItemComparer;
+            sut.GetHashCode(items);
 
             // Verify outcome
-            Assert.Same(itemComparer, storedComparer);
-
-            // Teardown
-        }
-
-        /// <summary>
-        ///     Checks whether <see cref="SequenceEqualityComparer{T}()"/> constructor assigns default
-        ///     comparer for <typeparamref name="T"/> type to <see cref="SequenceEqualityComparer{T}.ItemComparer"/> property.
-        /// </summary>
-        [Fact]
-        internal void Constructor_Void_Always_AssignsItemComparer()
-        {
-            // Fixture setup
-            SequenceEqualityComparer<T> sut = new SequenceEqualityComparer<T>();
-
-            // Exercise system
-            IEqualityComparer<T> storedComparer = sut.ItemComparer;
-
-            // Verify outcome
-            Assert.Same(EqualityComparer<T>.Default, storedComparer);
+            itemsComparer.Received().GetHashCode(Arg.Any<T>());
 
             // Teardown
         }
