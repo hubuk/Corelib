@@ -12,5 +12,9 @@
     <ProjectReference Include="..\..\src\Leet.Testing\Leet.Testing.csproj" />
     <ProjectReference Include="..\Leet.Tests.Corelib\Leet.Tests.Corelib.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
+  </ItemGroup>
   
 </Project>

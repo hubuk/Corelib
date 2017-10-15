@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="RandomMultipleRelay.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -111,6 +111,11 @@ namespace Leet.Testing
         /// </exception>
         public object Create(object request, ISpecimenContext context)
         {
+            if (object.ReferenceEquals(request, null))
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             if (object.ReferenceEquals(context, null))
             {
                 throw new ArgumentNullException(nameof(context));

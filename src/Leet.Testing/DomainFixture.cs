@@ -30,11 +30,6 @@ namespace Leet.Testing
         /// </exception>
         private DomainFixture(ICustomization customization)
         {
-            if (object.ReferenceEquals(customization, null))
-            {
-                throw new ArgumentNullException(nameof(customization));
-            }
-
             this.Customize(customization);
         }
 

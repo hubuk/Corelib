@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DomainCustomizationBase.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -29,10 +29,6 @@ namespace Leet.Testing
         protected DomainCustomizationBase(IEnumerable<ICustomization> customizations)
             : base(customizations)
         {
-            if (object.ReferenceEquals(customizations, null))
-            {
-                throw new ArgumentNullException(nameof(customizations));
-            }
         }
 
         /// <summary>
@@ -47,10 +43,6 @@ namespace Leet.Testing
         protected DomainCustomizationBase(params ICustomization[] customizations)
             : base(customizations)
         {
-            if (object.ReferenceEquals(customizations, null))
-            {
-                throw new ArgumentNullException(nameof(customizations));
-            }
         }
     }
 }

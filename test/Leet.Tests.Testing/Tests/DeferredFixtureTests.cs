@@ -327,7 +327,8 @@ namespace Leet.Tests
         }
 
         /// <summary>
-        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method throws an exception when called without fixture assigned.
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     throws an exception when called without fixture assigned.
         /// </summary>
         /// <param name="composerTransformation">
         ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
@@ -341,7 +342,8 @@ namespace Leet.Tests
         }
 
         /// <summary>
-        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method throws an exception when called without fixture assigned.
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     throws an exception when called without fixture assigned.
         /// </summary>
         /// <param name="composerTransformation">
         ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
@@ -355,7 +357,8 @@ namespace Leet.Tests
         }
 
         /// <summary>
-        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method throws an exception when called without fixture assigned.
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     throws an exception when called without fixture assigned.
         /// </summary>
         /// <param name="composerTransformation">
         ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
@@ -369,7 +372,300 @@ namespace Leet.Tests
         }
 
         /// <summary>
-        ///     Checks whether the <see cref="IFixture.Build{T}"/> method throws an exception when called without fixture assigned.
+        ///     Checks whether the <see cref="IFixture.Behaviors"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void Behaviors_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.Behaviors;
+
+            // Verify outcome
+            _ = fixture.Received().Behaviors;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Customizations"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void Customizations_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.Customizations;
+
+            // Verify outcome
+            _ = fixture.Received().Customizations;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.OmitAutoProperties"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void OmitAutoProperties_GetWhenAssigned_CallsAssignedFixture()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.OmitAutoProperties;
+
+            // Verify outcome
+            _ = fixture.Received().OmitAutoProperties;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.OmitAutoProperties"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="value">
+        ///     Property value to set.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void OmitAutoProperties_SetWhenAssigned_CallsAssignedFixture(bool value)
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            sutAsIFixture.OmitAutoProperties = value;
+
+            // Verify outcome
+            fixture.Received().OmitAutoProperties = value;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.RepeatCount"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void RepeatCount_GetWhenAssigned_CallsAssignedFixture()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.RepeatCount;
+
+            // Verify outcome
+            _ = fixture.Received().RepeatCount;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.RepeatCount"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="value">
+        ///     Property value to set.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void RepeatCount_SetWhenAssigned_CallsAssignedFixture(int value)
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            sutAsIFixture.RepeatCount = value;
+
+            // Verify outcome
+            fixture.Received().RepeatCount = value;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.ResidueCollectors"/> property
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void ResidueCollectors_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.ResidueCollectors;
+
+            // Verify outcome
+            _ = fixture.Received().ResidueCollectors;
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void BuildOfObject_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            this.BuildOfT_CalledWhenAssigned_CallsAssignedFixture<object>();
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void BuildOfInt32_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            this.BuildOfT_CalledWhenAssigned_CallsAssignedFixture<int>();
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        [Paradigm]
+        public void BuildOfIDisposable_CalledWhenAssigned_CallsAssignedFixture()
+        {
+            this.BuildOfT_CalledWhenAssigned_CallsAssignedFixture<IDisposable>();
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="ISpecimenBuilder.Create(object, ISpecimenContext)"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="request">
+        ///     The request that describes what to create.
+        /// </param>
+        /// <param name="context">
+        ///     A context that can be used to create other specimens.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void Create_CalledWhenAssigned_CallsAssignedFixture(object request, ISpecimenContext context)
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.Create(request, context);
+
+            // Verify outcome
+            _ = fixture.Received().Create(request, context);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Customize(ICustomization)"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="customization">
+        ///     The customization to apply.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void Customize_CalledWhenAssigned_CallsAssignedFixture(ICustomization customization)
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.Customize(customization);
+
+            // Verify outcome
+            _ = fixture.Received().Customize(customization);
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="composerTransformation">
+        ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
+        ///     the modified composer.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void CustomizeOfObject_CalledWhenAssigned_CallsAssignedFixture(Func<ICustomizationComposer<object>, ISpecimenBuilder> composerTransformation)
+        {
+            this.CustomizeOfT_CalledWhenAssigned_CallsAssignedFixture(composerTransformation);
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="composerTransformation">
+        ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
+        ///     the modified composer.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void CustomizeOfInt32_CalledWhenAssigned_CallsAssignedFixture(Func<ICustomizationComposer<int>, ISpecimenBuilder> composerTransformation)
+        {
+            this.CustomizeOfT_CalledWhenAssigned_CallsAssignedFixture(composerTransformation);
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Customize{T}(Func{ICustomizationComposer{T}, ISpecimenBuilder})"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="composerTransformation">
+        ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
+        ///     the modified composer.
+        /// </param>
+        [Paradigm]
+        [AutoDomainData]
+        public void CustomizeOfIDisposable_CalledWhenAssigned_CallsAssignedFixture(Func<ICustomizationComposer<IDisposable>, ISpecimenBuilder> composerTransformation)
+        {
+            this.CustomizeOfT_CalledWhenAssigned_CallsAssignedFixture(composerTransformation);
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
         /// </summary>
         /// <typeparam name="T">
         ///     The type of object for which the algorithm should be customized.
@@ -390,7 +686,8 @@ namespace Leet.Tests
         }
 
         /// <summary>
-        ///     Checks whether the <see cref="IFixture.Build{T}"/> method throws an exception when called without fixture assigned.
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
         /// </summary>
         /// <param name="composerTransformation">
         ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
@@ -410,6 +707,58 @@ namespace Leet.Tests
             {
                 sut.Customize(composerTransformation);
             });
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <typeparam name="T">
+        ///     The type of object for which the algorithm should be customized.
+        /// </typeparam>
+        private void BuildOfT_CalledWhenAssigned_CallsAssignedFixture<T>()
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            _ = sutAsIFixture.Build<T>();
+
+            // Verify outcome
+            _ = fixture.Received().Build<T>();
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether the <see cref="IFixture.Build{T}"/> method
+        ///     delegate its call to the assigned fixture.
+        /// </summary>
+        /// <param name="composerTransformation">
+        ///     A function that customizes a given <see cref="ICustomizationComposer{T}"/> and returns
+        ///     the modified composer.
+        /// </param>
+        /// <typeparam name="T">
+        ///     The type of object for which the algorithm should be customized.
+        /// </typeparam>
+        private void CustomizeOfT_CalledWhenAssigned_CallsAssignedFixture<T>(Func<ICustomizationComposer<T>, ISpecimenBuilder> composerTransformation)
+        {
+            // Fixture setup
+            DeferredFixture sut = new DeferredFixture();
+            IFixture sutAsIFixture = sut;
+            IFixture fixture = Substitute.For<IFixture>();
+            sut.AssignFixture(fixture);
+
+            // Exercise system
+            sutAsIFixture.Customize(composerTransformation);
+
+            // Verify outcome
+            fixture.Received().Customize(composerTransformation);
 
             // Teardown
         }

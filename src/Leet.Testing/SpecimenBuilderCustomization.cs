@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="SpecimenBuilderCustomization.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -19,7 +19,7 @@ namespace Leet.Testing
     public class SpecimenBuilderCustomization : ICustomization
     {
         /// <summary>
-        ///     Holds a read-only reference to the speciment builder that shall extend a fixture.
+        ///     Holds a read-only reference to the specimen builder that shall extend a fixture.
         /// </summary>
         private readonly ISpecimenBuilder extension;
 
@@ -27,7 +27,7 @@ namespace Leet.Testing
         ///     Initializes a new instance of the <see cref="SpecimenBuilderCustomization"/> class.
         /// </summary>
         /// <param name="extension">
-        ///     A speciment builder that shall extend a fixture.
+        ///     A specimen builder that shall extend a fixture.
         /// </param>
         public SpecimenBuilderCustomization(ISpecimenBuilder extension)
         {
@@ -40,7 +40,7 @@ namespace Leet.Testing
         }
 
         /// <summary>
-        ///     Gets a speciment builder that shall extend a fixture.
+        ///     Gets a specimen builder that shall extend a fixture.
         /// </summary>
         public ISpecimenBuilder Extension
         {

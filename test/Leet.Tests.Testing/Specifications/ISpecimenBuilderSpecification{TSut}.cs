@@ -25,7 +25,30 @@ namespace Leet.Specifications
     {
         /// <summary>
         ///     Checks whether <see cref="ISpecimenBuilder.Create(object, ISpecimenContext)"/> method throws
-        ///     exception when called with <see langword="null"/> speciment context.
+        ///     exception when called with <see langword="null"/> request.
+        /// </summary>
+        [Paradigm]
+        public void Create_Object_ISpecimenContext_CalledWithNullRequest_DoesNotThrow()
+        {
+            // Fixture setup
+            IFixture testFixture = DomainFixture.CreateFor(this);
+            TSut sut = testFixture.Create<TSut>();
+            object request = null;
+            ISpecimenContext context = testFixture.Create<ISpecimenContext>();
+
+            // Exercise system
+            // Verify outcome
+            Assert.Throws<ArgumentNullException>(nameof(request), () =>
+            {
+                sut.Create(request, context);
+            });
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether <see cref="ISpecimenBuilder.Create(object, ISpecimenContext)"/> method throws
+        ///     exception when called with <see langword="null"/> specimen context.
         /// </summary>
         [Paradigm]
         public void Create_Object_ISpecimenContext_CalledWithNullContext_Throws()
@@ -33,12 +56,35 @@ namespace Leet.Specifications
             // Fixture setup
             IFixture testFixture = DomainFixture.CreateFor(this);
             TSut sut = testFixture.Create<TSut>();
+            object request = new object();
             ISpecimenContext context = null;
-            object request = null;
 
             // Exercise system
             // Verify outcome
             Assert.Throws<ArgumentNullException>(nameof(context), () =>
+            {
+                sut.Create(request, context);
+            });
+
+            // Teardown
+        }
+
+        /// <summary>
+        ///     Checks whether <see cref="ISpecimenBuilder.Create(object, ISpecimenContext)"/> method throws
+        ///     exception when called with <see langword="null"/> request and specimen context.
+        /// </summary>
+        [Paradigm]
+        public void Create_Object_ISpecimenContext_CalledWithNullRequestAndSpecimen_Throws()
+        {
+            // Fixture setup
+            IFixture testFixture = DomainFixture.CreateFor(this);
+            TSut sut = testFixture.Create<TSut>();
+            object request = null;
+            ISpecimenContext context = null;
+
+            // Exercise system
+            // Verify outcome
+            Assert.Throws<ArgumentNullException>(nameof(request), () =>
             {
                 sut.Create(request, context);
             });
