@@ -10,10 +10,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AutoFixture;
 using Leet.Specifications;
 using Leet.Testing;
 using Leet.Testing.Reflection;
-using Ploeh.AutoFixture;
 
 /// <summary>
 ///      A class that tests <see cref="TestDataProviderBase"/> class in a conformance to

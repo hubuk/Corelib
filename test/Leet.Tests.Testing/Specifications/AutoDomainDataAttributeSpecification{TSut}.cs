@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="AutoDomainDataAttributeSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -8,8 +8,8 @@
 
 namespace Leet.Specifications
 {
+    using AutoFixture;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace Leet.Specifications
 
             // Exercise system
             AutoDomainDataAttribute sut = fixture.Create<AutoDomainDataAttribute>();
-            IFixture result = sut.Fixture;
+            IFixture result = sut.DeferredFixture;
 
             // Verify outcome
             Assert.NotNull(result);

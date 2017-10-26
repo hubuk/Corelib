@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <VersionPrefix>0.0.2</VersionPrefix>
-    <AutoFixtureVersion>4.0.0-alpha.272</AutoFixtureVersion>
-    <SourceLinkVersion>2.4.0</SourceLinkVersion>
+    <AutoFixtureVersion>4.0.0-rc1</AutoFixtureVersion>
+    <SourceLinkVersion>2.5.0</SourceLinkVersion>
     <StyleCopAnalyzersVersion>1.1.0-beta004</StyleCopAnalyzersVersion>
     <XunitVersion>2.3.0</XunitVersion>
     <NSubstituteVersion>3.0.1</NSubstituteVersion>

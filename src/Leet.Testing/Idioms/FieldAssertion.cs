@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="FieldAssertion.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,9 +9,9 @@
 namespace Leet.Testing.Idioms
 {
     using System;
+    using AutoFixture.Idioms;
     using Leet.Testing.Properties;
     using Leet.Testing.Reflection;
-    using Ploeh.AutoFixture.Idioms;
 
     /// <summary>
     ///     The base class for idiomatic assertion that checks condition about type's field.

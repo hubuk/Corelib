@@ -10,10 +10,10 @@ namespace Leet.Specifications
 {
     using System;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Testing;
     using Leet.Testing.Paradigmatic;
     using NSubstitute;
-    using Ploeh.AutoFixture;
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;

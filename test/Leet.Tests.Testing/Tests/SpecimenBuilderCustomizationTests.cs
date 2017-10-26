@@ -10,11 +10,11 @@ namespace Leet.Tests
 {
     using System;
     using System.Collections.Generic;
+    using AutoFixture;
+    using AutoFixture.Kernel;
     using Leet.Specifications;
     using Leet.Testing;
     using NSubstitute;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Kernel;
     using Xunit;
 
     /// <summary>

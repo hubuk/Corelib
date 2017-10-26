@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DomainFixtureBuilder.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -10,8 +10,8 @@ namespace Leet
 {
     using System;
     using System.Reflection;
+    using AutoFixture.Kernel;
     using Leet.Testing;
-    using Ploeh.AutoFixture.Kernel;
 
     /// <summary>
     ///     Provides a mechanism for creating <see cref="DomainFixture"/> objects.

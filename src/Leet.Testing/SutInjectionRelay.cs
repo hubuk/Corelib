@@ -10,7 +10,7 @@ namespace Leet.Testing
 {
     using System;
     using System.Reflection;
-    using Ploeh.AutoFixture.Kernel;
+    using AutoFixture.Kernel;
 
     /// <summary>
     ///     Class that is responsible for inhecting overridden fixture behavior defined via <see cref="IFixtureOverride{TSut}"/> interface.

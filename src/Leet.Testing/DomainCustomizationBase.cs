@@ -10,7 +10,7 @@ namespace Leet.Testing
 {
     using System;
     using System.Collections.Generic;
-    using Ploeh.AutoFixture;
+    using AutoFixture;
 
     /// <summary>
     ///     Represents a base class for customization related to a problem domain.

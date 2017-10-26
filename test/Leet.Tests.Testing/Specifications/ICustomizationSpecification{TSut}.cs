@@ -9,8 +9,8 @@
 namespace Leet.Specifications
 {
     using System;
+    using AutoFixture;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     /// <summary>

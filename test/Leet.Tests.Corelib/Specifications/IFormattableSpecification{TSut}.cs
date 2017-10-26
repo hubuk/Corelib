@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IFormattableSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -11,11 +11,11 @@ namespace Leet.Specifications
     using System;
     using System.Globalization;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Testing;
     using Leet.Testing.Assertions;
     using Leet.Testing.Reflection;
     using NSubstitute;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     /// <summary>

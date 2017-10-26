@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IFixtureSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -9,10 +9,10 @@
 namespace Leet.Specifications
 {
     using System;
+    using AutoFixture;
+    using AutoFixture.Dsl;
+    using AutoFixture.Kernel;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Dsl;
-    using Ploeh.AutoFixture.Kernel;
     using Xunit;
 
     /// <summary>

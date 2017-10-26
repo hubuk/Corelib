@@ -9,8 +9,8 @@
 namespace Leet.Testing
 {
     using System.Collections.Generic;
+    using AutoFixture.Xunit2;
     using Leet.Testing.Paradigmatic;
-    using Ploeh.AutoFixture.Xunit2;
     using Xunit.Abstractions;
 
     /// <summary>

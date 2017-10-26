@@ -10,11 +10,11 @@ namespace Leet.Tests
 {
     using System;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Specifications;
     using Leet.Testing;
     using Leet.Testing.Paradigmatic;
     using NSubstitute;
-    using Ploeh.AutoFixture;
     using Xunit.Abstractions;
     using Xunit.Sdk;
 

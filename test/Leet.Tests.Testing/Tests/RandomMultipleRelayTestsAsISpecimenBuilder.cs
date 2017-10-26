@@ -8,9 +8,9 @@
 
 namespace Leet.Tests
 {
+    using AutoFixture.Kernel;
     using Leet.Specifications;
     using Leet.Testing;
-    using Ploeh.AutoFixture.Kernel;
 
     /// <summary>
     ///      A class that tests <see cref="RandomMultipleRelay"/> class in a conformance to

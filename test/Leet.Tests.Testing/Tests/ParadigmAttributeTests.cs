@@ -10,10 +10,10 @@ namespace Leet.Tests
 {
     using System;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Specifications;
     using Leet.Testing;
     using Leet.Testing.Reflection;
-    using Ploeh.AutoFixture;
     using Xunit;
     using Xunit.Sdk;
 

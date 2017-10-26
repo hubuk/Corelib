@@ -9,8 +9,8 @@
 namespace Leet.Testing
 {
     using System;
+    using AutoFixture.Kernel;
     using Leet.Testing.Properties;
-    using Ploeh.AutoFixture.Kernel;
 
     /// <summary>
     ///     Relays requests for multiple (an unspecified count) specimens to a request for a random number of specimens.

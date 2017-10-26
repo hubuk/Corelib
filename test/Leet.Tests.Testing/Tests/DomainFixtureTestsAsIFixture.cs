@@ -8,9 +8,9 @@
 
 namespace Leet.Tests
 {
+    using AutoFixture;
     using Leet.Specifications;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
 
     /// <summary>
     ///      A class that tests <see cref="DomainFixture"/> class in a conformance to

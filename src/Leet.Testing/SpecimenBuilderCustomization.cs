@@ -9,8 +9,8 @@
 namespace Leet.Testing
 {
     using System;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Kernel;
+    using AutoFixture;
+    using AutoFixture.Kernel;
 
     /// <summary>
     ///     Represents a customization of an <see cref="IFixture"/> that extends its functionality

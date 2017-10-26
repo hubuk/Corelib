@@ -10,11 +10,11 @@ namespace Leet.Testing
 {
     using System;
     using System.Collections.Generic;
+    using AutoFixture;
+    using AutoFixture.Dsl;
+    using AutoFixture.Kernel;
+    using AutoFixture.Xunit2;
     using Leet.Testing.Properties;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Dsl;
-    using Ploeh.AutoFixture.Kernel;
-    using Ploeh.AutoFixture.Xunit2;
 
     /// <summary>
     ///     Prvides a mechanism for deferred <see cref="IFixture"/> initialization in <see cref="AutoDataAttribute"/>.

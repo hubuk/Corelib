@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="IsExtensionClassAssertion.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -12,7 +12,7 @@ namespace Leet.Testing.Idioms
     using System.Linq;
     using System.Reflection;
     using System.Runtime.CompilerServices;
-    using Ploeh.AutoFixture.Idioms;
+    using AutoFixture.Idioms;
 
     /// <summary>
     ///     The base class for idiomatic assertion that checks whether the specified type defines an extension class.

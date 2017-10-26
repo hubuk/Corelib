@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="ConstructorAssertion.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -13,9 +13,9 @@ namespace Leet.Testing.Idioms
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading;
+    using AutoFixture.Idioms;
     using Leet.Testing.Properties;
     using Leet.Testing.Reflection;
-    using Ploeh.AutoFixture.Idioms;
 
     /// <summary>
     ///     The base class for idiomatic assertion that checks condition about type's constructor.

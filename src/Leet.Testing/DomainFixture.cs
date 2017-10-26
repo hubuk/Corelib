@@ -11,8 +11,8 @@ namespace Leet.Testing
     using System;
     using System.Linq;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Testing.Properties;
-    using Ploeh.AutoFixture;
 
     /// <summary>
     ///     Provides anonymous object creation services with an additional knowledge of the current problem domain.

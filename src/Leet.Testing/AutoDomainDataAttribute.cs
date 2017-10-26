@@ -11,8 +11,8 @@ namespace Leet.Testing
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Xunit2;
+    using AutoFixture;
+    using AutoFixture.Xunit2;
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;
@@ -26,11 +26,39 @@ namespace Leet.Testing
     public class AutoDomainDataAttribute : AutoDataAttribute
     {
         /// <summary>
+        ///     An instance of the fixture for this attribute.
+        /// </summary>
+        private readonly DeferredFixture deferredFixture;
+
+        /// <summary>
         ///     Initializes a new instance of the <see cref="AutoDomainDataAttribute"/> class.
         /// </summary>
         public AutoDomainDataAttribute()
-            : base(new DeferredFixture())
+            : this(new DeferredFixture())
         {
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AutoDomainDataAttribute"/> class.
+        /// </summary>
+        /// <param name="fixture">
+        ///     An instance of the fixture for this attribute.
+        /// </param>
+        public AutoDomainDataAttribute(DeferredFixture fixture)
+            : base(() => fixture)
+        {
+            this.deferredFixture = fixture;
+        }
+
+        /// <summary>
+        ///     Gets the deffered fixture for this attribute.
+        /// </summary>
+        public DeferredFixture DeferredFixture
+        {
+            get
+            {
+                return this.deferredFixture;
+            }
         }
 
         /// <summary>
@@ -80,8 +108,7 @@ namespace Leet.Testing
             }
 
             IFixture fixture = DomainFixture.CreateFor(specification);
-            DeferredFixture deferredFixture = this.Fixture as DeferredFixture;
-            deferredFixture.AssignFixture(fixture);
+            this.deferredFixture.AssignFixture(fixture);
 
             return base.GetData(testMethod);
         }

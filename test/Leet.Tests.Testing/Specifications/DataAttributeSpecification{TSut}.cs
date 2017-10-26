@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DataAttributeSpecification{TSut}.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -10,8 +10,8 @@ namespace Leet.Specifications
 {
     using System;
     using System.Reflection;
+    using AutoFixture;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
     using Xunit;
     using Xunit.Sdk;
 

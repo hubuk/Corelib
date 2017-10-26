@@ -1,4 +1,4 @@
-﻿// -----------------------------------------------------------------------
+// -----------------------------------------------------------------------
 // <copyright file="DomainCustomization.cs" company="Leet">
 //     Copyright (c) Leet. All rights reserved.
 //     Licensed under the MIT License.
@@ -8,9 +8,9 @@
 
 namespace Leet
 {
+    using AutoFixture;
+    using AutoFixture.AutoNSubstitute;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.AutoNSubstitute;
 
     /// <summary>
     ///     Customizes an <see cref="IFixture"/> by using customizations related to current domain.

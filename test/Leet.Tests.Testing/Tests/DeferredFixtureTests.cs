@@ -9,12 +9,12 @@
 namespace Leet.Tests
 {
     using System;
+    using AutoFixture;
+    using AutoFixture.Dsl;
+    using AutoFixture.Kernel;
     using Leet.Specifications;
     using Leet.Testing;
     using NSubstitute;
-    using Ploeh.AutoFixture;
-    using Ploeh.AutoFixture.Dsl;
-    using Ploeh.AutoFixture.Kernel;
     using Xunit;
 
     /// <summary>

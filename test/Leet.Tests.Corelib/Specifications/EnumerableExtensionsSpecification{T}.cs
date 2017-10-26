@@ -11,9 +11,9 @@ namespace Leet.Specifications
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using AutoFixture;
     using Leet.Testing;
     using NSubstitute;
-    using Ploeh.AutoFixture;
     using Xunit;
 
     /// <summary>

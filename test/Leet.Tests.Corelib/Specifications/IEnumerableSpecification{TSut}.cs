@@ -9,8 +9,8 @@
 namespace Leet.Specifications
 {
     using System.Collections;
+    using AutoFixture;
     using Leet.Testing;
-    using Ploeh.AutoFixture;
 
     /// <summary>
     ///     A class that specifies behavior for <see cref="IEnumerable"/> interface.
