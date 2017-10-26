@@ -1,4 +1,8 @@
 <Project>
+
+  <PropertyGroup>
+    <DisablePackageReferenceRestrictions>True</DisablePackageReferenceRestrictions>
+  </PropertyGroup>
   
   <ItemGroup>
     <ProjectsToPack Include="$(RepositoryRoot)test\*\*.csproj" Exclude="@(ExcludeFromPack)" />

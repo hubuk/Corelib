@@ -9,7 +9,8 @@ addons:
   apt:
     packages:
       - libunwind8
-mono: none
+mono:
+  - latest
 os:
   - linux
   - osx
