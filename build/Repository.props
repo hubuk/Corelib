@@ -1,7 +1,8 @@
 <Project>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
-    <DefineConstants>$(DefineConstants);FEATURE_SERIALIZATION</DefineConstants>
+  <PropertyGroup>
+    <RepositoryTags>corelib</RepositoryTags>
+    <RepositoryName>Corelib</RepositoryName>
   </PropertyGroup>
-  
+
 </Project>
