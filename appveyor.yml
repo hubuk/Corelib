@@ -7,10 +7,10 @@ environment:
 nuget:
   disable_publish_on_pr: true
 build_script:
-- ps: .\build.ps1
+- cmd: run.cmd
 test: off
 artifacts:
-- path: artifacts\build\Leet.*.nupkg
+- path: **\Leet.*.nupkg
 deploy:
 - provider: Environment
   name: MyGet
